@@ -36,7 +36,6 @@ public class CarteGraphique extends JButton {
 		this.setEnabled(false);
 		this.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		this.setIcon(new ImageIcon("img/cache.jpg"));
-		
 	}
 	
 	
@@ -47,4 +46,11 @@ public class CarteGraphique extends JButton {
 		setIcon(new ImageIcon(carte.getCheminImageCarte()));
 	}
 	
+	
+	/**
+	 * Accesseur d'une carte correspondant à la carte gaphique. 
+	 */
+	public Carte getCarte() {
+		return carte;
+	}
 }

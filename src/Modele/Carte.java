@@ -18,6 +18,10 @@ public class Carte {
 	 * Chemin d'accès à l'image de la carte.
 	 */
 	private String cheminImageCarte;
+	/**
+	 * Détermine si la carte est retourné.
+	 */
+	private boolean retourner;
 	
 	
 	/**
@@ -28,6 +32,7 @@ public class Carte {
 	public Carte(int valeurCarte, CouleurCarte couleurCarte) {
 		this.valeurCarte = valeurCarte;
 		this.couleurCarte = couleurCarte;
+		retourner = false;
 		
 		cheminImageCarte = "img/";
 		
@@ -51,6 +56,16 @@ public class Carte {
 	 * @return String
 	 */
 	public String getCheminImageCarte() {
+		retourner = true;
+		
 		return cheminImageCarte;
+	}
+	
+	/**
+	 * Accesseur pour savoir si la carte est retournée.
+	 * @return boolean
+	 */
+	public boolean getCarteRetounees() {
+		return retourner;
 	}
 }
