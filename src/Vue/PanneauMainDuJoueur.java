@@ -69,7 +69,10 @@ public class PanneauMainDuJoueur extends JPanel {
 		}
 	}
 	
-	
+	/**
+	 * Vériufie si toutes les cartes sont retournées.
+	 * @return boolean
+	 */
 	public boolean toutesLesCartesSontRetournees() {
 		boolean verification = true;
 		

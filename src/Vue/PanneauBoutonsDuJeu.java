@@ -14,9 +14,16 @@ public class PanneauBoutonsDuJeu extends JPanel{
 	 * Bouton pour la distribution.
 	 */
 	private JButton boutonDistribuer;
-
+	/**
+	 * Bouton pour retourner les cartes du joueur.
+	 */
 	private JButton boutonRetournerToutesLesCartesDuJoueur;
-
+	
+	/**
+	 * Initialise le panneau et ces éléments le composant
+	 * @param controleur
+	 * @param panneau_main_joueur
+	 */
 	public PanneauBoutonsDuJeu(Controleur controleur, PanneauMainDuJoueur panneau_main_joueur) {
 		initialisationBoutonDistribuer(controleur, panneau_main_joueur);
 		initialisationBoutonRetournerToutesLesCartesDuJoueur(panneau_main_joueur);
@@ -50,7 +57,10 @@ public class PanneauBoutonsDuJeu extends JPanel{
 		this.add(boutonDistribuer);
 	}
 
-
+	/**
+	 * Initialise le bouton retournant toutes les cartes du joueur
+	 * @param panneau_main_joueur
+	 */
 	private void initialisationBoutonRetournerToutesLesCartesDuJoueur(PanneauMainDuJoueur panneau_main_joueur) {
 		boutonRetournerToutesLesCartesDuJoueur = new JButton("Retourner ses cartes");
 		boutonRetournerToutesLesCartesDuJoueur.setCursor(new Cursor(Cursor.HAND_CURSOR));
