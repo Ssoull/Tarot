@@ -2,7 +2,7 @@ package Modele;
 
 
 /**
- * Elément constituant les mains, le paquet de jeu et le Chien.
+ * Element constituant les mains, le paquet de jeu et le Chien.
  * @author Despret
  */
 public class Carte {
@@ -15,15 +15,14 @@ public class Carte {
 	 */
 	private CouleurCarte couleurCarte;
 	/**
-	 * Chemin d'accès à l'image de la carte.
+	 * Chemin d'acces a l'image de la carte.
 	 */
 	private String cheminImageCarte;
 	/**
-	 * Détermine si la carte est retourné.
+	 * Determine si la carte est retournee.
 	 */
 	private boolean retourner;
-	
-	
+
 	/**
 	 * Initialise une carte.
 	 * @param valeurCarte
@@ -33,9 +32,9 @@ public class Carte {
 		this.valeurCarte = valeurCarte;
 		this.couleurCarte = couleurCarte;
 		retourner = false;
-		
+
 		cheminImageCarte = "img/";
-		
+
 		switch(this.couleurCarte)
 		{
 		case Atout:
@@ -47,7 +46,6 @@ public class Carte {
 		default:
 			cheminImageCarte += this.valeurCarte + this.couleurCarte.toString();
 		}
-		
 		cheminImageCarte += ".jpg";
 	}
 
@@ -57,15 +55,14 @@ public class Carte {
 	 */
 	public String getCheminImageCarte() {
 		retourner = true;
-		
 		return cheminImageCarte;
 	}
-	
+
 	/**
-	 * Accesseur pour savoir si la carte est retournée.
+	 * Accesseur pour savoir si la carte est retournee.
 	 * @return boolean
 	 */
-	public boolean getCarteRetounees() {
+	public boolean estRetournee() {
 		return retourner;
 	}
 }

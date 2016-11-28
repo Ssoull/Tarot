@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 /**
- * Cette classe permet de différencier les cartes contenu dans la classe Modèle en carte sous forme de bouton.
+ * Cette classe permet de differencier les cartes contenu dans la classe Modele en carte sous forme de bouton.
  * @author Gutierrez
  */
 
@@ -18,15 +18,13 @@ public class CarteGraphique extends JButton {
 	 * Taille de l'image des cartes.
 	 */
 	final Dimension TAILLE_CARTE = new Dimension(100, 177);
-	
 	/**
 	 * Carte correspondant au bouton.
 	 */
 	private Carte carte;
 	
-	
 	/**
-	 * Initialise le bouton correspondant à une carte.
+	 * Initialise le bouton correspondant a une carte.
 	 * @param carte
 	 */
 	public CarteGraphique(Carte carte) {
@@ -38,7 +36,6 @@ public class CarteGraphique extends JButton {
 		this.setIcon(new ImageIcon("img/cache.jpg"));
 	}
 	
-	
 	/**
 	 * Revele la carte auparavant retournee, en remplacant son image de dos par son image de face.
 	 */
@@ -46,9 +43,8 @@ public class CarteGraphique extends JButton {
 		setIcon(new ImageIcon(carte.getCheminImageCarte()));
 	}
 	
-	
 	/**
-	 * Accesseur d'une carte correspondant à la carte gaphique. 
+	 * Renvoie la carte logique correspondant a cette carte graphique. 
 	 */
 	public Carte getCarte() {
 		return carte;

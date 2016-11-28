@@ -70,14 +70,14 @@ public class PanneauMainDuJoueur extends JPanel {
 	}
 	
 	/**
-	 * Vériufie si toutes les cartes sont retournées.
+	 * Vï¿½riufie si toutes les cartes sont retournï¿½es.
 	 * @return boolean
 	 */
 	public boolean toutesLesCartesSontRetournees() {
 		boolean verification = true;
 		
 		for(CarteGraphique carteMainJoueur : this.getCartesJoueurPourAffichage()) {
-			if(!carteMainJoueur.getCarte().getCarteRetounees()) {
+			if(!carteMainJoueur.getCarte().estRetournee()) {
 				verification = false;
 			}
 		}

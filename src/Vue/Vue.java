@@ -16,7 +16,7 @@ import java.util.Observer;
 import javax.swing.*;
 
 /**
- * Représente la vue de l'architecture MVC
+ * Reprï¿½sente la vue de l'architecture MVC
  * @author Despret, Gutierrez
  */
 
@@ -27,11 +27,11 @@ public class Vue extends JFrame implements Observer{
 	private final Dimension TAILLE_FENETRE = new Dimension(800,600);
 
 	/**
-	 * Représente le modèle de l'architecture MVC.
+	 * Reprï¿½sente le modï¿½le de l'architecture MVC.
 	 */
 	private Modele modele;
 	/**
-	 * Représente le controleur de l'architecture MVC.
+	 * Reprï¿½sente le controleur de l'architecture MVC.
 	 */
 	private Controleur controleur;
 
@@ -71,18 +71,16 @@ public class Vue extends JFrame implements Observer{
 
 
 	/**
-	 * Initialise la fenêtre d'affichage.
+	 * Initialise la fenï¿½tre d'affichage.
 	 */
 	private void initialisationFenetre() {
 		this.setLocationRelativeTo(null);
 		this.setTitle("Tarot S3 (Jules Despret, Pablo Gutierrez)");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setExtendedState(this.MAXIMIZED_BOTH); // Permet de mettre en plein écran
+		this.setExtendedState(this.MAXIMIZED_BOTH); // Permet de mettre en plein ecran
+		this.setResizable(false);
 		this.setVisible(true);
 	}
-
-	
-
 
 	/**
 	 * Initialisation de la mains du Joueur et et du Chien.
@@ -93,7 +91,6 @@ public class Vue extends JFrame implements Observer{
 		initialisationElementsPanneauBoutons();
 	}
 
-
 	/**
 	 * Initialisation de la mains du Joueur.
 	 */
@@ -101,7 +98,6 @@ public class Vue extends JFrame implements Observer{
 		panneauMainDuJoueur = new PanneauMainDuJoueur(this);
 		this.getContentPane().add(panneauMainDuJoueur, BorderLayout.WEST);
 	}
-
 
 	/**
 	 * Initialisation du Chien.
@@ -121,14 +117,14 @@ public class Vue extends JFrame implements Observer{
 	}
 
 	/**
-	 * Permet de mettre à jour la vue (appelé par la classe Modèle).
+	 * Permet de mettre a jour la Vue (appelee par la classe Modele).
 	 */
 	@Override
 	public void update(Observable obs, Object obj) {
 		panneauMainDuJoueur.actualisationCartesDuJoueurPourAffichage(modele, panneauBoutonsJeu);
 		panneauDuChien.actualisationCartesDuChienPourAffichage(modele);
 
-		this.validate(); // Ré-actualise les composants de la fenêtre (JPanel)
+		this.validate(); // Re-actualise les composants de la fenetre (JPanel)
 	}
 
 }

@@ -20,7 +20,7 @@ public class PanneauBoutonsDuJeu extends JPanel{
 	private JButton boutonRetournerToutesLesCartesDuJoueur;
 	
 	/**
-	 * Initialise le panneau et ces éléments le composant
+	 * Initialise le panneau et ces ï¿½lï¿½ments le composant
 	 * @param controleur
 	 * @param panneau_main_joueur
 	 */

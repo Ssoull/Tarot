@@ -1,11 +1,13 @@
 package Modele;
 
+import Tests.TarotException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Observable;
 
 /**
- * Représente le modèle de l'architecture MVC.
+ * Represente le modele de l'architecture MVC.
  * @author Gutierrez, Despret
  */
 public class Modele extends Observable {
@@ -29,26 +31,32 @@ public class Modele extends Observable {
 	private final int NOMBRE_CARTE_CHIEN = 6;
 
 	/**
-	 * Représente le paquet du jeu.
+	 * Represente le paquet du jeu.
 	 */
 	private ArrayList<Carte> paquetDuJeu;
 
 	/**
-	 * Représente les mains des 4 joueurs.
+	 * Represente les mains des 4 joueurs.
 	 */
 	private ArrayList<ArrayList<Carte>> mainsDesJoueurs;
 
 	/**
-	 * Représente le paquet du Chien.
+	 * Represente le paquet du Chien.
 	 */
 	private ArrayList<Carte> paquetDuChien;
 
 	/**
-	 * Initialise les éléments du Modèle.
+	 * Initialise les elements du Modele.
 	 */
 	public Modele() {
 		initialisationPaquet();
-		initialisationMains();
+
+		try {
+			initialisationMains();
+		} catch (TarotException e) {
+			e.message();
+		}
+
 		constructionJeuDeCarte();
 	}
 
@@ -63,11 +71,15 @@ public class Modele extends Observable {
 	/**
 	 * Initialise les mains des joueurs.
 	 */
-	private void initialisationMains() {
+	private void initialisationMains() throws TarotException {
 		mainsDesJoueurs = new ArrayList<ArrayList<Carte>>(4);
 
 		for(int nbrJoueur = 0; nbrJoueur < NOMBRE_JOUEURS; ++nbrJoueur) {
 			mainsDesJoueurs.add(new ArrayList<Carte>());
+		}
+
+		if(mainsDesJoueurs.size() != 4) {
+			throw new TarotException("Il y a " + mainsDesJoueurs.size() + " mains au lieu de 4");
 		}
 	}
 
@@ -75,12 +87,16 @@ public class Modele extends Observable {
 	 * Construit le contenu du paquet de jeu.
 	 */
 	private void constructionJeuDeCarte() {
-		constructionParCouleurDuJeu(14, CouleurCarte.Pique);
-		constructionParCouleurDuJeu(14, CouleurCarte.Coeur);
-		constructionParCouleurDuJeu(21, CouleurCarte.Atout);
-		constructionParCouleurDuJeu(14, CouleurCarte.Carreau);
-		constructionParCouleurDuJeu(14, CouleurCarte.Trefle);
-
+		try {
+			constructionParCouleurDuJeu(14, CouleurCarte.Pique);
+			constructionParCouleurDuJeu(14, CouleurCarte.Coeur);
+			constructionParCouleurDuJeu(21, CouleurCarte.Atout);
+			constructionParCouleurDuJeu(14, CouleurCarte.Carreau);
+			constructionParCouleurDuJeu(14, CouleurCarte.Trefle);
+		}
+		catch(TarotException e) {
+			e.message();
+		}
 		paquetDuJeu.add(new Carte(22, CouleurCarte.Excuse));
 
 		Collections.shuffle(paquetDuJeu);
@@ -91,16 +107,23 @@ public class Modele extends Observable {
 	 * @param nbrCartes
 	 * @param couleurCarte
 	 */
-	private void constructionParCouleurDuJeu(int nbrCartes, CouleurCarte couleurCarte) {
+	private void constructionParCouleurDuJeu(int nbrCartes, CouleurCarte couleurCarte) throws TarotException {
+		int nbCartesAjoutees = 0;
+		int tailleInitiale = paquetDuJeu.size();
+
 		for(int cptCartes = 1; cptCartes <= nbrCartes; ++cptCartes) {
 			paquetDuJeu.add(new Carte(cptCartes, couleurCarte));
+			++nbCartesAjoutees;
 		}
+
+		if(paquetDuJeu.size() != tailleInitiale + nbCartesAjoutees)
+			throw new TarotException(" Il y a " + nbCartesAjoutees + " cartes [" + couleurCarte.toString() + "] ajoutees et non " + nbrCartes);
 	}
 
 	/**
 	 * Permet de tirer 3 cartes par joueurs.
 	 */
-	public void tirerCartesPourLesJoueurs(int num_joueur) {
+	public void tirerCartesPourLesJoueurs(int num_joueur) throws TarotException {
 
 		for(int nbrCartesATirer = 0; nbrCartesATirer < NOMBRE_CARTE_POUR_DISTRIBUTION; ++nbrCartesATirer) {
 			mainsDesJoueurs.get(num_joueur).add(tiragePremiereCarteDuPaquetDeJeu());
@@ -109,7 +132,7 @@ public class Modele extends Observable {
 		if(paquetDuChien.size() < NOMBRE_CARTE_CHIEN) {
 			paquetDuChien.add(tiragePremiereCarteDuPaquetDeJeu());
 		}
-		
+
 		if(num_joueur == 0) {
 			this.setChanged();
 			this.notifyObservers();
@@ -117,7 +140,7 @@ public class Modele extends Observable {
 	}
 
 	/**
-	 * Tire la première carte du paquet de jeu et la retourne.
+	 * Tire la premiere carte du paquet de jeu et la retourne.
 	 * @return Carte
 	 */
 	private Carte tiragePremiereCarteDuPaquetDeJeu() {
