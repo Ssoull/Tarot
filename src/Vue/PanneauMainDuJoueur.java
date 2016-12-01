@@ -3,13 +3,14 @@ package Vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import Modele.Modele;
 
@@ -19,26 +20,62 @@ public class PanneauMainDuJoueur extends JPanel {
 	 */
 	private JLabel texteMainDuJoueur;
 	/**
+	 * Panneau positionnant correctement les cartes de la mains du premier Joueur.
+	 */
+	private JPanel placementCartesJoueur;
+	/**
 	 * Liste de toute les cartes de la main du Joueur.
 	 */
 	private ArrayList<CarteGraphique> cartesJoueurPourAffichage;
 	
+	
+	
 	/**
-	 * Initialise le panneau de la main du joueur et son contenus
+	 * Initialise le panneau de la main du joueur et son contenus.
 	 */
 	public PanneauMainDuJoueur(JFrame fenetre_affichage) {
-		texteMainDuJoueur = new JLabel("Main du Joueur :");
 		
-		this.setBackground(Color.BLUE);
-		Dimension tmpDimension = new Dimension(fenetre_affichage.getWidth() - (fenetre_affichage.getWidth()/2 - 150), fenetre_affichage.getHeight());
-		this.setPreferredSize(new Dimension(tmpDimension));
-		this.setMaximumSize(new Dimension(tmpDimension));
-
-		this.add(texteMainDuJoueur, BorderLayout.NORTH);
-
+		initialisationPanneauGeneral(fenetre_affichage);
+		initialisationTexteMainDuJoueur();
+		initialisationPlacementCartesJoueur();
+		
 		cartesJoueurPourAffichage = new ArrayList<CarteGraphique>();
 	}
 	
+	
+	/**
+	 * Initialise le panneau general de la mains du Joueur afin de pouvoir accepeter les elements qui le composent.
+	 * @param fenetre_affichage
+	 */
+	private void initialisationPanneauGeneral(JFrame fenetre_affichage) {
+		this.setBackground(Color.BLUE);
+		this.setLayout(new BorderLayout());
+		Dimension tmpDimension = new Dimension(fenetre_affichage.getWidth() - (fenetre_affichage.getWidth()/2 - 150), fenetre_affichage.getHeight());
+		this.setPreferredSize(new Dimension(tmpDimension));
+		this.setMaximumSize(new Dimension(tmpDimension));
+	}
+	
+	
+	/**
+	 * Initialise le texte servant à identifier la main du Joueur.
+	 */
+	private void initialisationTexteMainDuJoueur() {
+		texteMainDuJoueur = new JLabel("Main du Joueur :");
+		texteMainDuJoueur.setFont(new Font("Arial", Font.PLAIN, 30));
+		
+		this.add(texteMainDuJoueur, BorderLayout.NORTH);
+	}
+	
+	
+	/**
+	 * Initialise le placement des cartes de la mains du Joueur.
+	 */
+	private void initialisationPlacementCartesJoueur() {
+		placementCartesJoueur = new JPanel(new FlowLayout());
+		placementCartesJoueur.setBackground(Color.BLUE);
+		
+		this.add(placementCartesJoueur, BorderLayout.CENTER);
+	}
 	
 	
 	/**
@@ -64,13 +101,13 @@ public class PanneauMainDuJoueur extends JPanel {
 				}
 			});
 
-			this.add(cartesJoueurPourAffichage.get(cartesJoueurPourAffichage.size() - 1), BorderLayout.CENTER);
+			placementCartesJoueur.add(cartesJoueurPourAffichage.get(cartesJoueurPourAffichage.size() - 1));
 
 		}
 	}
 	
 	/**
-	 * Vï¿½riufie si toutes les cartes sont retournï¿½es.
+	 * Verifie si toutes les cartes sont retournees.
 	 * @return boolean
 	 */
 	public boolean toutesLesCartesSontRetournees() {

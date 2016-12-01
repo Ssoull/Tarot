@@ -16,7 +16,7 @@ import java.util.Observer;
 import javax.swing.*;
 
 /**
- * Repr�sente la vue de l'architecture MVC
+ * Represente la vue de l'architecture MVC
  * @author Despret, Gutierrez
  */
 
@@ -27,11 +27,11 @@ public class Vue extends JFrame implements Observer{
 	private final Dimension TAILLE_FENETRE = new Dimension(800,600);
 
 	/**
-	 * Repr�sente le mod�le de l'architecture MVC.
+	 * Represente le modele de l'architecture MVC.
 	 */
 	private Modele modele;
 	/**
-	 * Repr�sente le controleur de l'architecture MVC.
+	 * Represente le controleur de l'architecture MVC.
 	 */
 	private Controleur controleur;
 
@@ -71,14 +71,14 @@ public class Vue extends JFrame implements Observer{
 
 
 	/**
-	 * Initialise la fen�tre d'affichage.
+	 * Initialise la fenetre d'affichage.
 	 */
 	private void initialisationFenetre() {
+		this.setExtendedState(this.MAXIMIZED_BOTH); // Permet de mettre en plein ecran
 		this.setLocationRelativeTo(null);
 		this.setTitle("Tarot S3 (Jules Despret, Pablo Gutierrez)");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setExtendedState(this.MAXIMIZED_BOTH); // Permet de mettre en plein ecran
-		this.setResizable(false);
+		this.setResizable(true);
 		this.setVisible(true);
 	}
 
