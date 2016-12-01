@@ -41,7 +41,7 @@ public class Carte {
 			cheminImageCarte += this.valeurCarte;
 			break;
 		case Excuse:
-			cheminImageCarte += "excuse";
+			cheminImageCarte += "Excuse";
 			break;
 		default:
 			cheminImageCarte += this.valeurCarte + this.couleurCarte.toString();

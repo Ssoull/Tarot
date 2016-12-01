@@ -11,20 +11,20 @@ import Vue.Vue;
  */
 public class Application {
 	/**
-	 * Représente la vue de l'architecture MVC
+	 * Represente la vue de l'architecture MVC
 	 */
 	private Vue vue;
 	/**
-	 * Représente le modèle de l'architecture MVC
+	 * Represente le modele de l'architecture MVC
 	 */
 	private Modele modele;
 	/**
-	 * Représente le controleur de l'architecture MVC
+	 * Represente le controleur de l'architecture MVC
 	 */
 	private Controleur controleur;
 	
 	/**
-	 * Initialise les éléments pour lancer l'application
+	 * Initialise les elements pour lancer l'application
 	 */
 	public Application() {
 		modele = new Modele();

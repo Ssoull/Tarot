@@ -47,9 +47,11 @@ public class PanneauDuChien extends JPanel {
 	private void initialisationPanneauDuChien(JFrame fenetre_affichage) {
 		this.setBackground(Color.RED);
 		this.setLayout(new BorderLayout());
-		Dimension tmpDimension = new Dimension(fenetre_affichage.getWidth(), fenetre_affichage.getHeight());
+		
+		Dimension tmpDimension = new Dimension(fenetre_affichage.getWidth()/2, fenetre_affichage.getHeight());
 		this.setPreferredSize(tmpDimension);
 		this.setMaximumSize(tmpDimension);
+		this.setMinimumSize(tmpDimension);
 	}
 
 	/**
@@ -63,7 +65,7 @@ public class PanneauDuChien extends JPanel {
 	}
 
 	/**
-	 * Initialise le panneau plaçant correctement les cartes du chien.
+	 * Initialise le panneau plaï¿½ant correctement les cartes du chien.
 	 */
 	private void initialisationPlacementCartesDuChien() {
 		placementCartesDuChien = new JPanel(new FlowLayout());

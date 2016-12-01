@@ -74,7 +74,9 @@ public class Vue extends JFrame implements Observer{
 	 * Initialise la fenetre d'affichage.
 	 */
 	private void initialisationFenetre() {
-		this.setExtendedState(this.MAXIMIZED_BOTH); // Permet de mettre en plein ecran
+		this.setLayout(new BorderLayout());
+		Dimension dimensionEcran = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+		this.setSize(dimensionEcran);
 		this.setLocationRelativeTo(null);
 		this.setTitle("Tarot S3 (Jules Despret, Pablo Gutierrez)");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -96,6 +98,7 @@ public class Vue extends JFrame implements Observer{
 	 */
 	private void initialisationElementsMainDuJoueur() {
 		panneauMainDuJoueur = new PanneauMainDuJoueur(this);
+		
 		this.getContentPane().add(panneauMainDuJoueur, BorderLayout.WEST);
 	}
 
@@ -104,7 +107,8 @@ public class Vue extends JFrame implements Observer{
 	 */
 	private void initialisationElementsChien() {
 		panneauDuChien = new PanneauDuChien(this);
-		this.getContentPane().add(panneauDuChien, BorderLayout.CENTER);
+		
+		this.getContentPane().add(panneauDuChien, BorderLayout.EAST);
 	}
 	
 	
@@ -113,6 +117,7 @@ public class Vue extends JFrame implements Observer{
 	 */
 	private void initialisationElementsPanneauBoutons() {
 		panneauBoutonsJeu = new PanneauBoutonsDuJeu(controleur, panneauMainDuJoueur);
+		
 		this.getContentPane().add(panneauBoutonsJeu, BorderLayout.NORTH); 
 	}
 

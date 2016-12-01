@@ -50,14 +50,16 @@ public class PanneauMainDuJoueur extends JPanel {
 	private void initialisationPanneauGeneral(JFrame fenetre_affichage) {
 		this.setBackground(Color.BLUE);
 		this.setLayout(new BorderLayout());
-		Dimension tmpDimension = new Dimension(fenetre_affichage.getWidth() - (fenetre_affichage.getWidth()/2 - 150), fenetre_affichage.getHeight());
-		this.setPreferredSize(new Dimension(tmpDimension));
-		this.setMaximumSize(new Dimension(tmpDimension));
+		
+		Dimension tmpDimension = new Dimension(fenetre_affichage.getSize().width/2, fenetre_affichage.getSize().height);
+		this.setPreferredSize(tmpDimension);
+		this.setMaximumSize(tmpDimension);
+		this.setMinimumSize(tmpDimension);
 	}
 	
 	
 	/**
-	 * Initialise le texte servant à identifier la main du Joueur.
+	 * Initialise le texte servant a identifier la main du Joueur.
 	 */
 	private void initialisationTexteMainDuJoueur() {
 		texteMainDuJoueur = new JLabel("Main du Joueur :");
