@@ -49,4 +49,14 @@ public class CarteGraphique extends JButton {
 	public Carte getCarte() {
 		return carte;
 	}
+
+	
+	/**
+	 * Mutateur ppour changer la carte.
+	 * @param carte
+	 */
+	public void setCarte(Carte carte) {
+		this.carte = carte;
+		setIcon(new ImageIcon(carte.getCheminImageCarte()));
+	}
 }

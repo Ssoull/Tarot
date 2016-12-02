@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import Modele.Carte;
 import Modele.Modele;
 
 public class PanneauMainDuJoueur extends JPanel {
@@ -51,10 +52,9 @@ public class PanneauMainDuJoueur extends JPanel {
 		this.setBackground(Color.BLUE);
 		this.setLayout(new BorderLayout());
 		
-		Dimension tmpDimension = new Dimension(fenetre_affichage.getSize().width/2, fenetre_affichage.getSize().height);
+		Dimension tmpDimension = new Dimension(fenetre_affichage.getWidth()/2, fenetre_affichage.getHeight());
 		this.setPreferredSize(tmpDimension);
 		this.setMaximumSize(tmpDimension);
-		this.setMinimumSize(tmpDimension);
 	}
 	
 	
@@ -74,16 +74,16 @@ public class PanneauMainDuJoueur extends JPanel {
 	 */
 	private void initialisationPlacementCartesJoueur() {
 		placementCartesJoueur = new JPanel(new FlowLayout());
-		placementCartesJoueur.setBackground(Color.BLUE);
+		placementCartesJoueur.setBackground(Color.YELLOW);
 		
-		this.add(placementCartesJoueur, BorderLayout.CENTER);
+		this.add(placementCartesJoueur);
 	}
 	
 	
 	/**
 	 * Actualise l'affichage de la main du Joueur.
 	 */
-	public void actualisationCartesDuJoueurPourAffichage(Modele modele, PanneauBoutonsDuJeu panneau_boutons) {
+	public void actualisationCartesDuJoueurPourAffichageLorsDeLaDistribution(Modele modele, PanneauBoutonsDuJeu panneau_boutons) {
 		int tailleDesCartesDuJoueurPourAffichage = cartesJoueurPourAffichage.size();
 
 		for(int nbrCartePourAjout = 0; nbrCartePourAjout <= 2; ++nbrCartePourAjout) {
@@ -95,10 +95,13 @@ public class PanneauMainDuJoueur extends JPanel {
 			carteJoueurPourAffichageCourant.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					carteJoueurPourAffichageCourant.retourner();
+					if(panneau_boutons.getBoutonRetournerToutesLesCartesDuJoueur().isEnabled()) {
+						carteJoueurPourAffichageCourant.retourner();
+					}
 					
 					if(panneauTemporaire.toutesLesCartesSontRetournees()) {
 						panneau_boutons.getBoutonRetournerToutesLesCartesDuJoueur().setEnabled(false);
+						modele.trierMainJoueur();
 					}
 				}
 			});
@@ -106,6 +109,21 @@ public class PanneauMainDuJoueur extends JPanel {
 			placementCartesJoueur.add(cartesJoueurPourAffichage.get(cartesJoueurPourAffichage.size() - 1));
 
 		}
+	}
+	
+	/**
+	 * Actualise les cartes une fois que le modèle les tries.
+	 * @param modele
+	 */
+	public void actualisationCartesDuJoueurPouraffichageLorsDuTrie(Modele modele) {
+		int cpt = 0;
+		
+		for (Carte carte : modele.getMainDuPremierJoueur()) {
+			cartesJoueurPourAffichage.get(cpt).setCarte(carte);
+			cpt++;
+		}
+
+		modele.setMainsDuJoueurPourAffichageTrie(true);
 	}
 	
 	/**

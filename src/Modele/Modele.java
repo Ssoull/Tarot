@@ -45,6 +45,8 @@ public class Modele extends Observable {
 	 */
 	private ArrayList<Carte> paquetDuChien;
 
+	private boolean mainsDuJoueurPourAffichageTrie;
+	
 	/**
 	 * Initialise les elements du Modele.
 	 */
@@ -58,6 +60,8 @@ public class Modele extends Observable {
 		}
 
 		constructionJeuDeCarte();
+		
+		mainsDuJoueurPourAffichageTrie = false;
 	}
 
 	/**
@@ -149,6 +153,17 @@ public class Modele extends Observable {
 
 		return tmpCarte;
 	}
+	
+	
+	/**
+	 * Trie la main du joueur 1 en classant les cartes par couleur et valeur.
+	 */
+	public void trierMainJoueur() {
+		Collections.sort(mainsDesJoueurs.get(0), Carte.comparateurCartes);
+		this.setChanged();
+		this.notifyObservers();
+	}
+	
 
 	/**
 	 * Accesseur du paquet de jeu.
@@ -175,7 +190,7 @@ public class Modele extends Observable {
 	}
 
 	/**
-	 * Accesseur du nombre de cartes minimum contenu dans une mains
+	 * Accesseur du nombre de cartes minimum contenu dans une mains.
 	 * @return int
 	 */
 	public int getNombreCartesMinimumParJoueur() {
@@ -189,6 +204,25 @@ public class Modele extends Observable {
 	public int getNombreJoueur() {
 		return NOMBRE_JOUEURS;
 	}
+	
+	
+	/**
+	 * Accesseur pour savoir si la mains du joueur dans la vue est trie ou non.
+	 * @return boolean
+	 */
+	public boolean getMainsDuJoueurPourAffichageTrie() {
+		return mainsDuJoueurPourAffichageTrie;
+	}
+
+	/**
+	 * Mutateur utilisé pour dire que le mains du joueur de la vue est trie.
+	 * @param trie
+	 */
+	public void setMainsDuJoueurPourAffichageTrie(boolean trie) {
+		mainsDuJoueurPourAffichageTrie = trie;
+	}
+	
+	
 }
 
 

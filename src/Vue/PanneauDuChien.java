@@ -36,7 +36,6 @@ public class PanneauDuChien extends JPanel {
 		initialisationTexteDuChien();
 		initialisationPlacementCartesDuChien();
 
-
 		cartesDuChienPourAffichage = new ArrayList<CarteGraphique>();
 	}
 
@@ -47,11 +46,10 @@ public class PanneauDuChien extends JPanel {
 	private void initialisationPanneauDuChien(JFrame fenetre_affichage) {
 		this.setBackground(Color.RED);
 		this.setLayout(new BorderLayout());
-		
+
 		Dimension tmpDimension = new Dimension(fenetre_affichage.getWidth()/2, fenetre_affichage.getHeight());
 		this.setPreferredSize(tmpDimension);
 		this.setMaximumSize(tmpDimension);
-		this.setMinimumSize(tmpDimension);
 	}
 
 	/**
@@ -60,7 +58,7 @@ public class PanneauDuChien extends JPanel {
 	private void initialisationTexteDuChien() {
 		texteDuChien = new JLabel("Chien :");
 		texteDuChien.setFont(new Font("Arial", Font.PLAIN, 30));
-		
+
 		this.add(texteDuChien, BorderLayout.NORTH);
 	}
 
@@ -69,15 +67,15 @@ public class PanneauDuChien extends JPanel {
 	 */
 	private void initialisationPlacementCartesDuChien() {
 		placementCartesDuChien = new JPanel(new FlowLayout());
-		placementCartesDuChien.setBackground(Color.RED);
-		
+		placementCartesDuChien.setBackground(Color.GREEN);
+
 		this.add(placementCartesDuChien);
 	}
-	
+
 	/**
 	 * Actualise l'affichage du Chien.
 	 */
-	public void actualisationCartesDuChienPourAffichage(Modele modele) {
+	public void actualisationCartesDuChienPourAffichageLorsDeLaDistribution(Modele modele) {
 		int tailleDuChien = modele.getPaquetDuChien().size();
 
 		cartesDuChienPourAffichage.add(new CarteGraphique(modele.getPaquetDuChien().get(tailleDuChien - 1)));

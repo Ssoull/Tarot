@@ -4,12 +4,7 @@ import Modele.Modele;
 import Controleur.Controleur;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -21,11 +16,6 @@ import javax.swing.*;
  */
 
 public class Vue extends JFrame implements Observer{
-	/**
-	 * Taille de la fenetre.
-	 */
-	private final Dimension TAILLE_FENETRE = new Dimension(800,600);
-
 	/**
 	 * Represente le modele de l'architecture MVC.
 	 */
@@ -75,9 +65,9 @@ public class Vue extends JFrame implements Observer{
 	 */
 	private void initialisationFenetre() {
 		this.setLayout(new BorderLayout());
+		this.setExtendedState(this.MAXIMIZED_BOTH); // Permet de mettre en plein ecran
 		Dimension dimensionEcran = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		this.setSize(dimensionEcran);
-		this.setLocationRelativeTo(null);
 		this.setTitle("Tarot S3 (Jules Despret, Pablo Gutierrez)");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(true);
@@ -99,7 +89,7 @@ public class Vue extends JFrame implements Observer{
 	private void initialisationElementsMainDuJoueur() {
 		panneauMainDuJoueur = new PanneauMainDuJoueur(this);
 		
-		this.getContentPane().add(panneauMainDuJoueur, BorderLayout.WEST);
+		this.getContentPane().add(panneauMainDuJoueur, BorderLayout.EAST);
 	}
 
 	/**
@@ -108,7 +98,7 @@ public class Vue extends JFrame implements Observer{
 	private void initialisationElementsChien() {
 		panneauDuChien = new PanneauDuChien(this);
 		
-		this.getContentPane().add(panneauDuChien, BorderLayout.EAST);
+		this.getContentPane().add(panneauDuChien, BorderLayout.WEST);
 	}
 	
 	
@@ -116,7 +106,7 @@ public class Vue extends JFrame implements Observer{
 	 * Initialise le panneau contenant les boutons du jeu
 	 */
 	private void initialisationElementsPanneauBoutons() {
-		panneauBoutonsJeu = new PanneauBoutonsDuJeu(controleur, panneauMainDuJoueur);
+		panneauBoutonsJeu = new PanneauBoutonsDuJeu(modele, controleur, panneauMainDuJoueur);
 		
 		this.getContentPane().add(panneauBoutonsJeu, BorderLayout.NORTH); 
 	}
@@ -126,10 +116,14 @@ public class Vue extends JFrame implements Observer{
 	 */
 	@Override
 	public void update(Observable obs, Object obj) {
-		panneauMainDuJoueur.actualisationCartesDuJoueurPourAffichage(modele, panneauBoutonsJeu);
-		panneauDuChien.actualisationCartesDuChienPourAffichage(modele);
+		if(panneauBoutonsJeu.getBoutonDistribuer().isEnabled()) {
+			panneauMainDuJoueur.actualisationCartesDuJoueurPourAffichageLorsDeLaDistribution(modele, panneauBoutonsJeu);
+			panneauDuChien.actualisationCartesDuChienPourAffichageLorsDeLaDistribution(modele);
+		}
+		else if(!panneauBoutonsJeu.getBoutonRetournerToutesLesCartesDuJoueur().isEnabled() && !modele.getMainsDuJoueurPourAffichageTrie()) {
+			panneauMainDuJoueur.actualisationCartesDuJoueurPouraffichageLorsDuTrie(modele);
+		}
 
 		this.validate(); // Re-actualise les composants de la fenetre (JPanel)
 	}
-
 }

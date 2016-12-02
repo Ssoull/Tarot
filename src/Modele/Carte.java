@@ -1,5 +1,6 @@
 package Modele;
 
+import java.util.Comparator;
 
 /**
  * Element constituant les mains, le paquet de jeu et le Chien.
@@ -48,6 +49,70 @@ public class Carte {
 		}
 		cheminImageCarte += ".jpg";
 	}
+	
+	
+	public static Comparator<Carte> comparateurCartes = new Comparator<Carte>() {
+
+		/**
+		 * Compare deux cartes en calculant pour chacune une valeur de
+		 * comparaison.
+		 * 
+		 * @return La valeur de la premiere carte moins celle de la deuxieme.
+		 */
+		public int compare(Carte carte1, Carte carte2) {
+			int valeur1 = valeurDeComparaisonCalculee(carte1);
+			int valeur2 = valeurDeComparaisonCalculee(carte2);
+
+			return valeur1 - valeur2;
+		}
+
+		/**
+		 * 
+		 * @param c : la carte dont on veut calculer la valeur de comparaison.
+		 * @return la valeur de comparaison calculee.
+		 */
+		private int valeurDeComparaisonCalculee(Carte c) {
+			int valeur = c.getValeur();
+			switch (c.getCouleur()) {
+			case Pique:
+				valeur += 0;
+				break;
+			case Coeur:
+				valeur += 100;
+				break;
+			case Excuse:
+				valeur += 200;
+				break;
+			case Atout:
+				valeur += 300;
+				break;
+			case Carreau:
+				valeur += 400;
+				break;
+			case Trefle:
+				valeur += 500;
+				break;
+			}
+			return valeur;
+		}
+
+	};
+	
+	
+	/**
+	 * @return L'entier representant la valeur de la carte
+	 */
+	public int getValeur() {
+		return valeurCarte;
+	}
+
+	/**
+	 * @return La couleur de la carte (enumeration).
+	 */
+	public CouleurCarte getCouleur() {
+		return couleurCarte;
+	}
+	
 
 	/**
 	 * Accesseur du chemin de l'image de la carte.
