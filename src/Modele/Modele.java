@@ -141,7 +141,7 @@ public class Modele extends Observable {
 
 	
 	/**
-	 * Permet de tirer 3 cartes par joueurs.
+	 * Permet de tirer 3 cartes pour les joueurs.
 	 */
 	public void tirerCartesPourLesJoueurs(int num_joueur) throws TarotException {
 
@@ -153,7 +153,6 @@ public class Modele extends Observable {
 			if(paquetDuChien.size() < NOMBRE_CARTE_CHIEN) {
 				paquetDuChien.add(tiragePremiereCarteDuPaquetDeJeu());
 			}
-			
 			this.setChanged();
 			this.notifyObservers();
 		}
@@ -212,12 +211,10 @@ public class Modele extends Observable {
 	 * Verifie si l'ecart est plein.
 	 * @return
 	 */
-	public boolean ecartPlein() {
-		if(paquetEcart.size() != 6) {
-			return false;
-		}
-		
-		return true;
+	public boolean ecartPlein() throws TarotException {
+		if(paquetEcart.size() > 6)
+			throw new TarotException("L'ecart contient trop de cartes [" + paquetEcart.size() + "]");
+		return paquetEcart.size() == 6;
 	}
 	
 	
@@ -304,7 +301,7 @@ public class Modele extends Observable {
 
 	
 	/**
-	 * Mutateur utilisé pour dire que le mains du joueur de la vue est trie.
+	 * Mutateur utilise pour dire que le mains du joueur de la vue est trie.
 	 * @param trie
 	 */
 	public void setNotifiactionMainsDuJoueurPourAffichagePourTrie(boolean trie) {

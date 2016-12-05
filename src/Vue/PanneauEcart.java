@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import Controleur.Controleur;
 import Modele.Modele;
+import Tests.TarotException;
 
 /**
  * Classe contenant tous les elements graphique de l'ecart.
@@ -103,11 +104,15 @@ public class PanneauEcart extends JPanel {
 			placementDesCartesDeEcart.add(cartesComposantEcart.get(cartesComposantEcart.size() - 1), BorderLayout.CENTER);
 		}
 		
-		if(modele.ecartPlein()) {
-			actualisationDesPaquetEnFonctionDuPaquetEcart(controleur, modele, panneau_bouton, panneau_chien, panneau_main_joueur);
-			
-			cartesComposantEcart.clear();
-			placementDesCartesDeEcart.removeAll();
+		try {
+			if(modele.ecartPlein()) {
+				actualisationDesPaquetEnFonctionDuPaquetEcart(controleur, modele, panneau_bouton, panneau_chien, panneau_main_joueur);
+				
+				cartesComposantEcart.clear();
+				placementDesCartesDeEcart.removeAll();
+			}
+		} catch (TarotException e) {
+			e.message();
 		}
 	}
 	
@@ -123,7 +128,11 @@ public class PanneauEcart extends JPanel {
 	private void actualisationDesPaquetEnFonctionDuPaquetEcart(Controleur controleur, Modele modele, PanneauBoutonsDuJeu panneau_bouton, PanneauDuChien panneau_chien, PanneauMainDuJoueur panneau_main_joueur) {
 		panneau_chien.viderPaquetDuChienDansLaMainDuJoueur(modele);
 		
-		controleur.viderPaquetDuChienEtRecupererEcartDansChien();
+		try {
+			controleur.viderPaquetDuChienEtRecupererEcartDansChien();
+		} catch (TarotException e) {
+			e.message();
+		}
 		
 		panneau_chien.recupererPaquetEcartDansPaquetDuChien(modele);
 		

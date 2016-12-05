@@ -2,6 +2,8 @@ package Modele;
 
 import java.util.Comparator;
 
+import Tests.TarotException;
+
 /**
  * Element constituant les mains, le paquet de jeu et le Chien.
  * @author Despret
@@ -35,6 +37,18 @@ public class Carte {
 		this.typeCarte = typeCarte;
 		retourner = false;
 
+		try {
+			attribuerChemin(typeCarte);
+		} catch (TarotException e) {
+			e.message();
+		}
+	}
+	
+	/**
+	 * Attribue a cette carte le chemin pour acceder a son fichier image.
+	 * @param typeCarte
+	 */
+	private void attribuerChemin(TypeCarte typeCarte) throws TarotException {
 		cheminImageCarte = "img/";
 
 		switch(this.typeCarte)
@@ -47,13 +61,17 @@ public class Carte {
 			break;
 		default:
 			cheminImageCarte += this.valeurCarte + this.typeCarte.toString();
+			break;
 		}
 		cheminImageCarte += ".jpg";
+		
+		if(cheminImageCarte == "img/.jpg")
+			throw new TarotException("La carte [" + valeurCarte + " : " + typeCarte + "] a un chemin mal initialise");
 	}
 	
 	
 	/**
-	 * Methode permetant de comparer les cartes et de les reordonnees entres elles.
+	 * Methode permetant de comparer les cartes et de les reordonner entres elles.
 	 */
 	public static Comparator<Carte> comparateurCartes = new Comparator<Carte>() {
 
@@ -98,7 +116,6 @@ public class Carte {
 			}
 			return valeur;
 		}
-
 	};
 	
 	

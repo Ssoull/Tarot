@@ -75,14 +75,13 @@ public class Controleur {
 		this.recommencerPartie = recommencerPartie;
 	}
 
-	public void viderPaquetDuChien() {
-		
-	}
-
-	public void viderPaquetDuChienEtRecupererEcartDansChien() {
+	public void viderPaquetDuChienEtRecupererEcartDansChien() throws TarotException {
 		if(modele.getPaquetEcart().size() == 6)	{
 			modele.viderChien();
 			modele.recupererCartesEcartDansChien();
 		}
+		
+		if(modele.getPaquetDuChien().size() != 6)
+			throw new TarotException("Il y a " + modele.getPaquetDuChien().size() + " cartes et non 6 dans le chien apres recuperation de l'ecart");
 	}
 }
