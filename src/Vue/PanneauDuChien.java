@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Controleur.Controleur;
 import Modele.Carte;
 import Modele.Modele;
 
@@ -72,7 +73,7 @@ public class PanneauDuChien extends JPanel {
 
 	
 	/**
-	 * Initialise le panneau pla�ant correctement les cartes du chien.
+	 * Initialise le panneau mettant correctement les cartes du chien.
 	 */
 	private void initialisationPlacementCartesDuChien() {
 		placementCartesDuChien = new JPanel(new FlowLayout());
@@ -97,13 +98,16 @@ public class PanneauDuChien extends JPanel {
 	 * Methode permettant de vider le chien dans le paquet du joueur.
 	 * @param modele
 	 */
-	public void viderPaquetDuChienDansLaMainDuJoueur( Modele modele) {
+	public void viderPaquetDuChienDansLaMainDuJoueur(Controleur controleur, Modele modele) {
 		for(CarteGraphique carteGraphique : cartesDuChienPourAffichage) {
 			modele.ajoutCarteDansMainJoueur(carteGraphique.getCarte());
 		}
 		
 		cartesDuChienPourAffichage.clear();
 		placementCartesDuChien.removeAll();
+		
+		controleur.viderPaquetDuChien(); //On vide le chien (au niveau stockage 
+		controleur.trierMainJoueur(); //On trie la main du joueur (dans le modele) et re-affiche la bonne main du joueur grace au modele Observer/Observable.
 	}
 	
 	

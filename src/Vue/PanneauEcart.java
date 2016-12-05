@@ -126,17 +126,13 @@ public class PanneauEcart extends JPanel {
 	 * @param panneau_main_joueur
 	 */
 	private void actualisationDesPaquetEnFonctionDuPaquetEcart(Controleur controleur, Modele modele, PanneauBoutonsDuJeu panneau_bouton, PanneauDuChien panneau_chien, PanneauMainDuJoueur panneau_main_joueur) {
-		panneau_chien.viderPaquetDuChienDansLaMainDuJoueur(modele);
-		
 		try {
-			controleur.viderPaquetDuChienEtRecupererEcartDansChien();
+			controleur.recupererEcartDansChien();
 		} catch (TarotException e) {
 			e.message();
 		}
 		
 		panneau_chien.recupererPaquetEcartDansPaquetDuChien(modele);
-		
-		controleur.trierMainJoueur();
 		
 		for(CarteGraphique carteGraphique : panneau_main_joueur.getCartesJoueurPourAffichage()) {
 			carteGraphique.setEnabled(true);

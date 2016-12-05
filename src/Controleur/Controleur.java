@@ -14,8 +14,6 @@ public class Controleur {
 	 * Represente le Modele de l'architecture MVC.
 	 */
 	private Modele modele;
-	
-	private boolean recommencerPartie;
 
 	/**
 	 * Constructeur parametre du Controleur.
@@ -23,7 +21,6 @@ public class Controleur {
 	 */
 	public Controleur(Modele modele) {
 		this.modele = modele;
-		recommencerPartie = false;
 	}
 
 	/**
@@ -48,11 +45,23 @@ public class Controleur {
 			return false;
 		}
 	}
-
+	
+	
+	/**
+	 * Trie la main du joueur.
+	 */
 	public void trierMainJoueur() {
-		modele.trierMainJoueur();
+		// On ne refait pas de trie si l'affichage du precedent trie ne s'est pas fait.
+		if(!modele.getNotificationMainsDuJoueurPourAffichagePourTrie()) {
+			modele.trierMainJoueur();
+		}
 	}
 	
+	
+	/**
+	 * Ajoute une carte dans l'ecart qui est en parametre.
+	 * @param chemin_carte
+	 */
 	public void ajoutCarteDansEcart(String chemin_carte) {
 		Carte carteTmp = null;
 		
@@ -66,22 +75,29 @@ public class Controleur {
 			modele.ajoutCarteEcart(carteTmp);
 		}
 	}
-
-	public boolean getRecommencerPartie() {
-		return recommencerPartie;
-	}
-
-	public void setRecommencerPartie(boolean recommencerPartie) {
-		this.recommencerPartie = recommencerPartie;
-	}
-
-	public void viderPaquetDuChienEtRecupererEcartDansChien() throws TarotException {
+	
+	
+	/**
+	 * Recupere les cartes de l'ecart pour le mettre dans le chien.
+	 * @throws TarotException
+	 */
+	public void recupererEcartDansChien() throws TarotException {
 		if(modele.getPaquetEcart().size() == 6)	{
-			modele.viderChien();
 			modele.recupererCartesEcartDansChien();
 		}
 		
 		if(modele.getPaquetDuChien().size() != 6)
 			throw new TarotException("Il y a " + modele.getPaquetDuChien().size() + " cartes et non 6 dans le chien apres recuperation de l'ecart");
+	}
+	
+	
+	
+	/**
+	 * Vider le paquet du chien.
+	 */
+	public void viderPaquetDuChien() {
+		if(!modele.getPaquetDuChien().isEmpty()) {
+			modele.viderChien();
+		}
 	}
 }

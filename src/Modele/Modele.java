@@ -15,7 +15,6 @@ public class Modele extends Observable {
 	 * Le nombre joueur dans une partie
 	 */
 	private final int NOMBRE_JOUEURS = 4;
-
 	/**
 	 * Le nombre de cartes pour la distribution.
 	 */
@@ -24,7 +23,6 @@ public class Modele extends Observable {
 	 * Le nombre de cartes minimum dans la main du joueur.
 	 */
 	private final int NOMBRE_CARTES_MINIMUM_PAR_JOUEUR = 18;
-
 	/**
 	 * Le nombre de carte dans le chien.
 	 */

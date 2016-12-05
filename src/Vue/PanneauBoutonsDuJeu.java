@@ -57,8 +57,8 @@ public class PanneauBoutonsDuJeu extends JPanel{
 		
 		boutonPourLaPrise = new JButton("Prise");
 		boutonPourLaGarde = new JButton("Garde");
-		initialisationBoutonPourLaPriseEtLaGarde(boutonPourLaPrise, panneau_main_joueur, panneau_chien);
-		initialisationBoutonPourLaPriseEtLaGarde(boutonPourLaGarde, panneau_main_joueur, panneau_chien);
+		initialisationBoutonPourLaPriseEtLaGarde(controleur, modele, boutonPourLaPrise, panneau_main_joueur, panneau_chien);
+		initialisationBoutonPourLaPriseEtLaGarde(controleur, modele, boutonPourLaGarde, panneau_main_joueur, panneau_chien);
 		
 		boutonPourLaGardeSansLeChien = new JButton("Garde sans le chien");
 		boutonPourLaGardeContreLeChien = new JButton("Garde contre le chien");
@@ -125,7 +125,7 @@ public class PanneauBoutonsDuJeu extends JPanel{
 	 * @param panneau_main_joueur
 	 * @param panneau_chien
 	 */
-	private void initialisationBoutonPourLaPriseEtLaGarde(JButton bouton, PanneauMainDuJoueur panneau_main_joueur, PanneauDuChien panneau_chien) {
+	private void initialisationBoutonPourLaPriseEtLaGarde(Controleur controleur, Modele modele, JButton bouton, PanneauMainDuJoueur panneau_main_joueur, PanneauDuChien panneau_chien) {
 		bouton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		bouton.setVisible(true);
 		bouton.setEnabled(false);
@@ -134,7 +134,7 @@ public class PanneauBoutonsDuJeu extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				if(evt.getSource() == bouton) {
-					actionBoutonPriseEtGarde(panneau_main_joueur, panneau_chien);
+					actionBoutonPriseEtGarde(controleur, modele, panneau_main_joueur, panneau_chien);
 				}
 			}
 		});
@@ -187,11 +187,14 @@ public class PanneauBoutonsDuJeu extends JPanel{
 	 * @param panneau_main_joueur
 	 * @param panneau_chien
 	 */
-	public void actionBoutonPriseEtGarde(PanneauMainDuJoueur panneau_main_joueur, PanneauDuChien panneau_chien) {
+	public void actionBoutonPriseEtGarde(Controleur controleur, Modele modele, PanneauMainDuJoueur panneau_main_joueur, PanneauDuChien panneau_chien) {
 		boutonPourLaPrise.setEnabled(false);
 		boutonPourLaGarde.setEnabled(false);
 		boutonPourLaGardeSansLeChien.setEnabled(false);
 		boutonPourLaGardeContreLeChien.setEnabled(false);
+		
+		
+		panneau_chien.viderPaquetDuChienDansLaMainDuJoueur(controleur, modele); //On Recupere les cartes du chien dans la mains du joueur (au niveau stockage dans le modele) et on vide le chien.
 		
 		for(CarteGraphique carteGraphique : panneau_chien.getCartesDuChienPourAffichage()) {
 			carteGraphique.retourner();
