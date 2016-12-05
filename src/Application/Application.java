@@ -33,12 +33,15 @@ public class Application {
 		
 		modele.addObserver(vue);
 	}
-	
+
+
 	/**
 	 * Lance l'application
 	 * @param args
 	 */
 	public static void main(String[] args){
+		
 		new Application();
+
 	}
 }

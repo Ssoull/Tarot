@@ -1,5 +1,6 @@
 package Controleur;
 
+import Modele.Carte;
 import Modele.Modele;
 import Tests.TarotException;
 
@@ -13,6 +14,8 @@ public class Controleur {
 	 * Represente le Modele de l'architecture MVC.
 	 */
 	private Modele modele;
+	
+	private boolean recommencerPartie;
 
 	/**
 	 * Constructeur parametre du Controleur.
@@ -20,6 +23,7 @@ public class Controleur {
 	 */
 	public Controleur(Modele modele) {
 		this.modele = modele;
+		recommencerPartie = false;
 	}
 
 	/**
@@ -42,6 +46,43 @@ public class Controleur {
 		}
 		else {
 			return false;
+		}
+	}
+
+	public void trierMainJoueur() {
+		modele.trierMainJoueur();
+	}
+	
+	public void ajoutCarteDansEcart(String chemin_carte) {
+		Carte carteTmp = null;
+		
+		for(Carte carte : modele.getMainDuPremierJoueur()) {
+			if(carte.getCheminImageCarte().equals(chemin_carte) && modele.getPaquetEcart().size() != 6) {
+				carteTmp = carte;
+			}
+		}
+		
+		if(carteTmp != null) {
+			modele.ajoutCarteEcart(carteTmp);
+		}
+	}
+
+	public boolean getRecommencerPartie() {
+		return recommencerPartie;
+	}
+
+	public void setRecommencerPartie(boolean recommencerPartie) {
+		this.recommencerPartie = recommencerPartie;
+	}
+
+	public void viderPaquetDuChien() {
+		
+	}
+
+	public void viderPaquetDuChienEtRecupererEcartDansChien() {
+		if(modele.getPaquetEcart().size() == 6)	{
+			modele.viderChien();
+			modele.recupererCartesEcartDansChien();
 		}
 	}
 }

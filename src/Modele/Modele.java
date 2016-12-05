@@ -29,7 +29,13 @@ public class Modele extends Observable {
 	 * Le nombre de carte dans le chien.
 	 */
 	private final int NOMBRE_CARTE_CHIEN = 6;
-
+	
+	/**
+	 * Indique si la mains du joueur est triee.
+	 */
+	private boolean notificationMainsDuJoueurPourAffichagePourTrie;
+	
+	
 	/**
 	 * Represente le paquet du jeu.
 	 */
@@ -45,7 +51,11 @@ public class Modele extends Observable {
 	 */
 	private ArrayList<Carte> paquetDuChien;
 
-	private boolean mainsDuJoueurPourAffichageTrie;
+	/**
+	 * Represente l'ecart.
+	 */
+	private ArrayList<Carte> paquetEcart;
+	
 	
 	/**
 	 * Initialise les elements du Modele.
@@ -61,17 +71,20 @@ public class Modele extends Observable {
 
 		constructionJeuDeCarte();
 		
-		mainsDuJoueurPourAffichageTrie = false;
+		notificationMainsDuJoueurPourAffichagePourTrie = false;
 	}
 
+	
 	/**
 	 * Initialise les paquets.
 	 */
 	private void initialisationPaquet() {
 		paquetDuJeu = new  ArrayList<Carte>();
-		paquetDuChien = new ArrayList<Carte>();
+		paquetDuChien = new ArrayList<Carte>(6);
+		paquetEcart = new ArrayList<Carte>(6);
 	}
 
+	
 	/**
 	 * Initialise les mains des joueurs.
 	 */
@@ -87,43 +100,46 @@ public class Modele extends Observable {
 		}
 	}
 
+	
 	/**
 	 * Construit le contenu du paquet de jeu.
 	 */
 	private void constructionJeuDeCarte() {
 		try {
-			constructionParCouleurDuJeu(14, CouleurCarte.Pique);
-			constructionParCouleurDuJeu(14, CouleurCarte.Coeur);
-			constructionParCouleurDuJeu(21, CouleurCarte.Atout);
-			constructionParCouleurDuJeu(14, CouleurCarte.Carreau);
-			constructionParCouleurDuJeu(14, CouleurCarte.Trefle);
+			constructionParCouleurDuJeu(14, TypeCarte.Pique);
+			constructionParCouleurDuJeu(14, TypeCarte.Coeur);
+			constructionParCouleurDuJeu(21, TypeCarte.Atout);
+			constructionParCouleurDuJeu(14, TypeCarte.Carreau);
+			constructionParCouleurDuJeu(14, TypeCarte.Trefle);
 		}
 		catch(TarotException e) {
 			e.message();
 		}
-		paquetDuJeu.add(new Carte(22, CouleurCarte.Excuse));
+		paquetDuJeu.add(new Carte(22, TypeCarte.Excuse));
 
 		Collections.shuffle(paquetDuJeu);
 	}
 
+	
 	/**
 	 * Construit une partie du paquet en fonction de la couleur et du nombre de carte de cette couleur. 
 	 * @param nbrCartes
-	 * @param couleurCarte
+	 * @param typeCarte
 	 */
-	private void constructionParCouleurDuJeu(int nbrCartes, CouleurCarte couleurCarte) throws TarotException {
+	private void constructionParCouleurDuJeu(int nbrCartes, TypeCarte typeCarte) throws TarotException {
 		int nbCartesAjoutees = 0;
 		int tailleInitiale = paquetDuJeu.size();
 
 		for(int cptCartes = 1; cptCartes <= nbrCartes; ++cptCartes) {
-			paquetDuJeu.add(new Carte(cptCartes, couleurCarte));
+			paquetDuJeu.add(new Carte(cptCartes, typeCarte));
 			++nbCartesAjoutees;
 		}
 
 		if(paquetDuJeu.size() != tailleInitiale + nbCartesAjoutees)
-			throw new TarotException(" Il y a " + nbCartesAjoutees + " cartes [" + couleurCarte.toString() + "] ajoutees et non " + nbrCartes);
+			throw new TarotException(" Il y a " + nbCartesAjoutees + " cartes [" + typeCarte.toString() + "] ajoutees et non " + nbrCartes);
 	}
 
+	
 	/**
 	 * Permet de tirer 3 cartes par joueurs.
 	 */
@@ -133,16 +149,17 @@ public class Modele extends Observable {
 			mainsDesJoueurs.get(num_joueur).add(tiragePremiereCarteDuPaquetDeJeu());
 		}
 
-		if(paquetDuChien.size() < NOMBRE_CARTE_CHIEN) {
-			paquetDuChien.add(tiragePremiereCarteDuPaquetDeJeu());
-		}
-
 		if(num_joueur == 0) {
+			if(paquetDuChien.size() < NOMBRE_CARTE_CHIEN) {
+				paquetDuChien.add(tiragePremiereCarteDuPaquetDeJeu());
+			}
+			
 			this.setChanged();
 			this.notifyObservers();
 		}
 	}
 
+	
 	/**
 	 * Tire la premiere carte du paquet de jeu et la retourne.
 	 * @return Carte
@@ -150,7 +167,7 @@ public class Modele extends Observable {
 	private Carte tiragePremiereCarteDuPaquetDeJeu() {
 		Carte tmpCarte = paquetDuJeu.get(0);
 		paquetDuJeu.remove(0);
-
+		
 		return tmpCarte;
 	}
 	
@@ -160,11 +177,70 @@ public class Modele extends Observable {
 	 */
 	public void trierMainJoueur() {
 		Collections.sort(mainsDesJoueurs.get(0), Carte.comparateurCartes);
+		
+		notificationMainsDuJoueurPourAffichagePourTrie = true;
+		
+		this.setChanged();
+		this.notifyObservers();
+	}
+
+	
+	/**
+	 * Ajoute une carte en parametre dans l'ecart.
+	 * Cette carte vient de la main du joueur, on doit donc l'enlever.
+	 * @param carte
+	 */
+	public void ajoutCarteEcart(Carte carte) {
+		paquetEcart.add(carte);
+		mainsDesJoueurs.get(0).remove(carte);
+		
 		this.setChanged();
 		this.notifyObservers();
 	}
 	
+	
+	/**
+	 * Ajoute une carte en parametre dans la main du joueur.
+	 * @param carte
+	 */
+	public void ajoutCarteDansMainJoueur(Carte carte) {
+		mainsDesJoueurs.get(0).add(carte);
+	}
+	
+	
+	/**
+	 * Verifie si l'ecart est plein.
+	 * @return
+	 */
+	public boolean ecartPlein() {
+		if(paquetEcart.size() != 6) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	
+	/**
+	 * Methode vidant le chien.
+	 */
+	public void viderChien() {
+		paquetDuChien.clear();
+	}
+	
+	
+	/**
+	 * Methode remplissant le chien a partir de l'ecart.
+	 */
+	public void recupererCartesEcartDansChien() {
+		for(Carte carte : paquetEcart) {
+			paquetDuChien.add(carte);
+		}
+		
+		paquetEcart.clear();
+	}
 
+	
 	/**
 	 * Accesseur du paquet de jeu.
 	 * @return
@@ -181,6 +257,7 @@ public class Modele extends Observable {
 		return mainsDesJoueurs.get(0);
 	}
 
+	
 	/**
 	 * Accesseur du Chien.
 	 * @return ArrayList<Carte>
@@ -188,7 +265,17 @@ public class Modele extends Observable {
 	public ArrayList<Carte> getPaquetDuChien() {
 		return paquetDuChien;
 	}
+	
+	
+	/**
+	 * Accesseur de l'ecart.
+	 * @return ArrayList<Carte>
+	 */
+	public ArrayList<Carte> getPaquetEcart() {
+		return paquetEcart;
+	}
 
+	
 	/**
 	 * Accesseur du nombre de cartes minimum contenu dans une mains.
 	 * @return int
@@ -197,6 +284,7 @@ public class Modele extends Observable {
 		return NOMBRE_CARTES_MINIMUM_PAR_JOUEUR;
 	}
 
+	
 	/**
 	 * Accesseur nombre de joueurs dans une partie.
 	 * @return int
@@ -210,19 +298,18 @@ public class Modele extends Observable {
 	 * Accesseur pour savoir si la mains du joueur dans la vue est trie ou non.
 	 * @return boolean
 	 */
-	public boolean getMainsDuJoueurPourAffichageTrie() {
-		return mainsDuJoueurPourAffichageTrie;
+	public boolean getNotificationMainsDuJoueurPourAffichagePourTrie() {
+		return notificationMainsDuJoueurPourAffichagePourTrie;
 	}
 
+	
 	/**
 	 * Mutateur utilisé pour dire que le mains du joueur de la vue est trie.
 	 * @param trie
 	 */
-	public void setMainsDuJoueurPourAffichageTrie(boolean trie) {
-		mainsDuJoueurPourAffichageTrie = trie;
+	public void setNotifiactionMainsDuJoueurPourAffichagePourTrie(boolean trie) {
+		notificationMainsDuJoueurPourAffichagePourTrie = trie;
 	}
-	
-	
 }
 
 

@@ -33,13 +33,17 @@ public class CarteGraphique extends JButton {
 		this.setVisible(true);
 		this.setEnabled(false);
 		this.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		this.setIcon(new ImageIcon("img/cache.jpg"));
+		
+		if(this.carte != null) {
+			this.setIcon(new ImageIcon("img/cache.jpg"));
+		}
 	}
 	
 	/**
 	 * Revele la carte auparavant retournee, en remplacant son image de dos par son image de face.
 	 */
 	public void retourner() {
+		carte.setRetourner(true);
 		setIcon(new ImageIcon(carte.getCheminImageCarte()));
 	}
 	
@@ -52,11 +56,15 @@ public class CarteGraphique extends JButton {
 
 	
 	/**
-	 * Mutateur ppour changer la carte.
+	 * Mutateur pour changer la carte.
 	 * @param carte
 	 */
 	public void setCarte(Carte carte) {
-		this.carte = carte;
-		setIcon(new ImageIcon(carte.getCheminImageCarte()));
+		this.carte.setTypeCarte(carte.getType());
+		this.carte.setCheminImageCarte(carte.getCheminImageCarte());
+		this.carte.setValeurCarte(carte.getValeur());
+		this.carte.setRetourner(carte.estRetournee());
+		
+		setIcon(new ImageIcon(this.carte.getCheminImageCarte()));
 	}
 }

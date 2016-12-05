@@ -35,13 +35,12 @@ public class Vue extends JFrame implements Observer{
 	 * Panneau contenant la main du Joueur.
 	 */
 	private PanneauMainDuJoueur panneauMainDuJoueur;
-	
 	/**
-	 * Panneau contant le Chien.
+	 * Panneau Contenant l'écart et le chien
 	 */
-	private PanneauDuChien panneauDuChien;
-	
+	private PanneauDuChienEtEcart panneauDuChienEtEcart;
 
+	
 	/**
 	 * Initialise les composant de la vue.
 	 * @param modele
@@ -53,10 +52,10 @@ public class Vue extends JFrame implements Observer{
 		this.controleur = controleur;
 
 		initialisationFenetre();
-
+		
 		initialisationElements();
-
-		this.validate();
+		
+		this.validate(); //Permet l'affichage des boutons sans evenement de l'acteur.
 	}
 
 
@@ -65,24 +64,26 @@ public class Vue extends JFrame implements Observer{
 	 */
 	private void initialisationFenetre() {
 		this.setLayout(new BorderLayout());
-		this.setExtendedState(this.MAXIMIZED_BOTH); // Permet de mettre en plein ecran
+		this.setExtendedState(Vue.MAXIMIZED_BOTH); // Permet de mettre en plein ecran
 		Dimension dimensionEcran = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		this.setSize(dimensionEcran);
-		this.setTitle("Tarot S3 (Jules Despret, Pablo Gutierrez)");
+		this.setTitle("Tarot S3B (Jules Despret, Pablo Gutierrez)");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(true);
 		this.setVisible(true);
 	}
 
+	
 	/**
 	 * Initialisation de la mains du Joueur et et du Chien.
 	 */
 	private void initialisationElements() {
 		initialisationElementsMainDuJoueur();
-		initialisationElementsChien();
+		initialisationElementsChienEtEcart();
 		initialisationElementsPanneauBoutons();
 	}
 
+	
 	/**
 	 * Initialisation de la mains du Joueur.
 	 */
@@ -92,13 +93,13 @@ public class Vue extends JFrame implements Observer{
 		this.getContentPane().add(panneauMainDuJoueur, BorderLayout.EAST);
 	}
 
+	
 	/**
-	 * Initialisation du Chien.
+	 * Initialisation du Chien et de l'Ecart.
 	 */
-	private void initialisationElementsChien() {
-		panneauDuChien = new PanneauDuChien(this);
-		
-		this.getContentPane().add(panneauDuChien, BorderLayout.WEST);
+	private void initialisationElementsChienEtEcart() {
+		panneauDuChienEtEcart = new PanneauDuChienEtEcart(this, controleur);
+		this.add(panneauDuChienEtEcart, BorderLayout.WEST);
 	}
 	
 	
@@ -106,24 +107,29 @@ public class Vue extends JFrame implements Observer{
 	 * Initialise le panneau contenant les boutons du jeu
 	 */
 	private void initialisationElementsPanneauBoutons() {
-		panneauBoutonsJeu = new PanneauBoutonsDuJeu(modele, controleur, panneauMainDuJoueur);
+		panneauBoutonsJeu = new PanneauBoutonsDuJeu(modele, controleur, panneauMainDuJoueur, panneauDuChienEtEcart.getPanneauDuChien());
 		
 		this.getContentPane().add(panneauBoutonsJeu, BorderLayout.NORTH); 
 	}
 
+	
 	/**
 	 * Permet de mettre a jour la Vue (appelee par la classe Modele).
 	 */
 	@Override
 	public void update(Observable obs, Object obj) {
 		if(panneauBoutonsJeu.getBoutonDistribuer().isEnabled()) {
-			panneauMainDuJoueur.actualisationCartesDuJoueurPourAffichageLorsDeLaDistribution(modele, panneauBoutonsJeu);
-			panneauDuChien.actualisationCartesDuChienPourAffichageLorsDeLaDistribution(modele);
+			panneauMainDuJoueur.actualisationCartesDuJoueurPourAffichageLorsDeLaDistribution(controleur, modele, panneauBoutonsJeu, panneauDuChienEtEcart.getPanneauEcart());
+			panneauDuChienEtEcart.getPanneauDuChien().actualisationCartesDuChienPourAffichageLorsDeLaDistribution(modele);
 		}
-		else if(!panneauBoutonsJeu.getBoutonRetournerToutesLesCartesDuJoueur().isEnabled() && !modele.getMainsDuJoueurPourAffichageTrie()) {
-			panneauMainDuJoueur.actualisationCartesDuJoueurPouraffichageLorsDuTrie(modele);
+		else if(modele.getNotificationMainsDuJoueurPourAffichagePourTrie()) {
+			panneauMainDuJoueur.actualisationCartesDuJoueurPouraffichageLorsDuTrie(modele, panneauBoutonsJeu);
 		}
-
+		else if(!panneauBoutonsJeu.getBoutonRetournerToutesLesCartesDuJoueur().isEnabled() && !panneauBoutonsJeu.getBoutonPourLaPrise().isEnabled()) {
+			panneauDuChienEtEcart.getPanneauEcart().actualisationPaquetEcart(controleur, modele, panneauBoutonsJeu, panneauDuChienEtEcart.getPanneauDuChien(), panneauMainDuJoueur);
+		}
+		
 		this.validate(); // Re-actualise les composants de la fenetre (JPanel)
+		this.repaint();
 	}
 }

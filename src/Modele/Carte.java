@@ -14,7 +14,7 @@ public class Carte {
 	/**
 	 * Couleur de la carte.
 	 */
-	private CouleurCarte couleurCarte;
+	private TypeCarte typeCarte;
 	/**
 	 * Chemin d'acces a l'image de la carte.
 	 */
@@ -24,19 +24,20 @@ public class Carte {
 	 */
 	private boolean retourner;
 
+	
 	/**
 	 * Initialise une carte.
 	 * @param valeurCarte
-	 * @param couleurCarte
+	 * @param typeCarte
 	 */
-	public Carte(int valeurCarte, CouleurCarte couleurCarte) {
+	public Carte(int valeurCarte, TypeCarte typeCarte) {
 		this.valeurCarte = valeurCarte;
-		this.couleurCarte = couleurCarte;
+		this.typeCarte = typeCarte;
 		retourner = false;
 
 		cheminImageCarte = "img/";
 
-		switch(this.couleurCarte)
+		switch(this.typeCarte)
 		{
 		case Atout:
 			cheminImageCarte += this.valeurCarte;
@@ -45,19 +46,21 @@ public class Carte {
 			cheminImageCarte += "Excuse";
 			break;
 		default:
-			cheminImageCarte += this.valeurCarte + this.couleurCarte.toString();
+			cheminImageCarte += this.valeurCarte + this.typeCarte.toString();
 		}
 		cheminImageCarte += ".jpg";
 	}
 	
 	
+	/**
+	 * Methode permetant de comparer les cartes et de les reordonnees entres elles.
+	 */
 	public static Comparator<Carte> comparateurCartes = new Comparator<Carte>() {
 
 		/**
 		 * Compare deux cartes en calculant pour chacune une valeur de
 		 * comparaison.
-		 * 
-		 * @return La valeur de la premiere carte moins celle de la deuxieme.
+		 * @return int
 		 */
 		public int compare(Carte carte1, Carte carte2) {
 			int valeur1 = valeurDeComparaisonCalculee(carte1);
@@ -67,23 +70,23 @@ public class Carte {
 		}
 
 		/**
-		 * 
-		 * @param c : la carte dont on veut calculer la valeur de comparaison.
-		 * @return la valeur de comparaison calculee.
+		 * Retourne la valeur de la carte place en parametre apres comparaison de sa couleur.
+		 * @param carte
+		 * @return int
 		 */
-		private int valeurDeComparaisonCalculee(Carte c) {
-			int valeur = c.getValeur();
-			switch (c.getCouleur()) {
+		private int valeurDeComparaisonCalculee(Carte carte) {
+			int valeur = carte.getValeur();
+			switch (carte.getType()) {
 			case Pique:
 				valeur += 0;
 				break;
 			case Coeur:
 				valeur += 100;
 				break;
-			case Excuse:
+			case Atout:
 				valeur += 200;
 				break;
-			case Atout:
+			case Excuse:
 				valeur += 300;
 				break;
 			case Carreau:
@@ -100,17 +103,20 @@ public class Carte {
 	
 	
 	/**
-	 * @return L'entier representant la valeur de la carte
+	 * Accesseur de la valeur de la carte.
+	 * @return int
 	 */
 	public int getValeur() {
 		return valeurCarte;
 	}
 
+	
 	/**
-	 * @return La couleur de la carte (enumeration).
+	 * Accesseur du type de la carte.
+	 * @return TypeCarte
 	 */
-	public CouleurCarte getCouleur() {
-		return couleurCarte;
+	public TypeCarte getType() {
+		return typeCarte;
 	}
 	
 
@@ -119,15 +125,51 @@ public class Carte {
 	 * @return String
 	 */
 	public String getCheminImageCarte() {
-		retourner = true;
 		return cheminImageCarte;
 	}
 
+	
 	/**
 	 * Accesseur pour savoir si la carte est retournee.
 	 * @return boolean
 	 */
 	public boolean estRetournee() {
 		return retourner;
+	}
+
+	
+	/**
+	 * Mutateur de la valeur de la carte.
+	 * @param valeurCarte
+	 */
+	public void setValeurCarte(int valeurCarte) {
+		this.valeurCarte = valeurCarte;
+	}
+
+	
+	/**
+	 * Mutateur du type de la carte.
+	 * @param typeCarte
+	 */
+	public void setTypeCarte(TypeCarte typeCarte) {
+		this.typeCarte = typeCarte;
+	}
+	
+	
+	/**
+	 * Mutateur du boolean indiquant si la carte est retournee.
+	 * @param retourner
+	 */
+	public void setRetourner(boolean retourner) {
+		this.retourner = retourner;
+	}
+
+	
+	/**
+	 * Mutateur du chemin de la carte.
+	 * @param cheminImageCarte
+	 */
+	public void setCheminImageCarte(String cheminImageCarte) {
+		this.cheminImageCarte = cheminImageCarte;
 	}
 }
