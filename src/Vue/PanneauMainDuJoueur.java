@@ -155,6 +155,7 @@ public class PanneauMainDuJoueur extends JPanel {
 			cpt++;
 		}
 		
+		//Verifie si le petit est sec.
 		if(cptAtout == 0 && lePetitSecPresent && !excusePresent) {
 			panneau_bouton.getBoutonPourLaPrise().setEnabled(false);
 			panneau_bouton.getBoutonPourLaGarde().setEnabled(false);
