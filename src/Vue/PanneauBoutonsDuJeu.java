@@ -203,9 +203,7 @@ public class PanneauBoutonsDuJeu extends JPanel{
 		for(CarteGraphique carteGraphique : panneau_main_joueur.getCartesJoueurPourAffichage()) {
 			//Ici le 14 représente les rois, le 1 l'atout 1 et le 21 l'atout 21, ces cartes ne peuvent pas etre dans l'Ecart.
 			if((carteGraphique.getCarte().getValeur() == 14 && carteGraphique.getCarte().getType() != TypeCarte.Atout) || 
-			  (carteGraphique.getCarte().getValeur() == 1 && carteGraphique.getCarte().getType() == TypeCarte.Atout) ||
-			  (carteGraphique.getCarte().getValeur() == 21 && carteGraphique.getCarte().getType() == TypeCarte.Atout) ||
-			  (carteGraphique.getCarte().getValeur() == 22 && carteGraphique.getCarte().getType() == TypeCarte.Atout))	{
+				carteGraphique.getCarte().getType() == TypeCarte.Atout || carteGraphique.getCarte().getType() == TypeCarte.Excuse)	{
 				carteGraphique.setEnabled(false);
 			}
 			else {
