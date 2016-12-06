@@ -16,6 +16,10 @@ public class Modele extends Observable {
 	 */
 	private final int NOMBRE_JOUEURS = 4;
 	/**
+	 * Nombre de cartes dans un jeu de Tarot.
+	 */
+	private final int NOMBRE_CARTES_TOTAL_TAROT = 78;
+	/**
 	 * Le nombre de cartes pour la distribution.
 	 */
 	private final int NOMBRE_CARTE_POUR_DISTRIBUTION = 3;
@@ -26,8 +30,11 @@ public class Modele extends Observable {
 	/**
 	 * Le nombre de carte dans le chien.
 	 */
-	private final int NOMBRE_CARTE_CHIEN = 6;
-	
+	private final int NOMBRE_CARTES_CHIEN = 6;
+	/**
+	 * Le nombre maximum de cartes dans l'ecart.
+	 */
+	private final int NOMBRE_CARTES_ECART = 6;
 	/**
 	 * Indique si la mains du joueur est triee.
 	 */
@@ -63,11 +70,10 @@ public class Modele extends Observable {
 
 		try {
 			initialisationMains();
+			constructionJeuDeCarte();
 		} catch (TarotException e) {
 			e.message();
 		}
-
-		constructionJeuDeCarte();
 		
 		notificationMainsDuJoueurPourAffichagePourTrie = false;
 	}
@@ -78,8 +84,8 @@ public class Modele extends Observable {
 	 */
 	private void initialisationPaquet() {
 		paquetDuJeu = new  ArrayList<Carte>();
-		paquetDuChien = new ArrayList<Carte>(6);
-		paquetEcart = new ArrayList<Carte>(6);
+		paquetDuChien = new ArrayList<Carte>(NOMBRE_CARTES_CHIEN);
+		paquetEcart = new ArrayList<Carte>(NOMBRE_CARTES_ECART);
 	}
 
 	
@@ -87,14 +93,14 @@ public class Modele extends Observable {
 	 * Initialise les mains des joueurs.
 	 */
 	private void initialisationMains() throws TarotException {
-		mainsDesJoueurs = new ArrayList<ArrayList<Carte>>(4);
+		mainsDesJoueurs = new ArrayList<ArrayList<Carte>>(NOMBRE_JOUEURS);
 
 		for(int nbrJoueur = 0; nbrJoueur < NOMBRE_JOUEURS; ++nbrJoueur) {
 			mainsDesJoueurs.add(new ArrayList<Carte>());
 		}
 
-		if(mainsDesJoueurs.size() != 4) {
-			throw new TarotException("Il y a " + mainsDesJoueurs.size() + " mains au lieu de 4");
+		if(mainsDesJoueurs.size() != NOMBRE_JOUEURS) {
+			throw new TarotException("Il y a " + mainsDesJoueurs.size() + " mains au lieu de " + NOMBRE_JOUEURS);
 		}
 	}
 
@@ -102,7 +108,7 @@ public class Modele extends Observable {
 	/**
 	 * Construit le contenu du paquet de jeu.
 	 */
-	private void constructionJeuDeCarte() {
+	private void constructionJeuDeCarte() throws TarotException {
 		try {
 			constructionParCouleurDuJeu(14, TypeCarte.Pique);
 			constructionParCouleurDuJeu(14, TypeCarte.Coeur);
@@ -114,6 +120,9 @@ public class Modele extends Observable {
 			e.message();
 		}
 		paquetDuJeu.add(new Carte(22, TypeCarte.Excuse));
+		
+		if(paquetDuJeu.size() != NOMBRE_CARTES_TOTAL_TAROT)
+			throw new TarotException("A l'initialisation, le paquet de cartes contient " + paquetDuJeu.size() + " cartes et non " + NOMBRE_CARTES_TOTAL_TAROT);
 
 		Collections.shuffle(paquetDuJeu);
 	}
@@ -142,13 +151,20 @@ public class Modele extends Observable {
 	 * Permet de tirer 3 cartes pour les joueurs.
 	 */
 	public void tirerCartesPourLesJoueurs(int num_joueur) throws TarotException {
-
+		int nbCartesInitialDansMainJoueur = mainsDesJoueurs.get(num_joueur).size();
 		for(int nbrCartesATirer = 0; nbrCartesATirer < NOMBRE_CARTE_POUR_DISTRIBUTION; ++nbrCartesATirer) {
 			mainsDesJoueurs.get(num_joueur).add(tiragePremiereCarteDuPaquetDeJeu());
 		}
+		
+		if(mainsDesJoueurs.get(num_joueur).size() != nbCartesInitialDansMainJoueur + NOMBRE_CARTE_POUR_DISTRIBUTION) {
+			int nbCartesAjoutees = mainsDesJoueurs.get(num_joueur).size() - nbCartesInitialDansMainJoueur;
+			
+			throw new TarotException(" Lors du tour du joueur " + num_joueur + ", seulement " + nbCartesAjoutees
+					+ " cartes ont ete ajoutees et non " + NOMBRE_CARTE_POUR_DISTRIBUTION);
+		}
 
 		if(num_joueur == 0) {
-			if(paquetDuChien.size() < NOMBRE_CARTE_CHIEN) {
+			if(paquetDuChien.size() < NOMBRE_CARTES_CHIEN) {
 				paquetDuChien.add(tiragePremiereCarteDuPaquetDeJeu());
 			}
 			this.setChanged();
@@ -286,6 +302,10 @@ public class Modele extends Observable {
 	 */
 	public int getNombreJoueur() {
 		return NOMBRE_JOUEURS;
+	}
+	
+	public int getNombreCartesTotalTarot() {
+		return NOMBRE_CARTES_TOTAL_TAROT;
 	}
 	
 	
