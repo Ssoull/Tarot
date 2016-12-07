@@ -213,10 +213,12 @@ public class PanneauBoutonsDuJeu extends JPanel{
 
 				carteGraphique.addMouseMotionListener(new MouseAdapter() {
 	                @Override
-	                public void mouseDragged(MouseEvent e) {
-	                    JButton button = (JButton) e.getSource();
-	                    TransferHandler handle = button.getTransferHandler();
-	                    handle.exportAsDrag(button, e, TransferHandler.COPY);
+	                public void mouseDragged(MouseEvent evenement_souris) {
+	                    JButton bouton = (JButton) evenement_souris.getSource();
+	                    TransferHandler handle = bouton.getTransferHandler();
+	                    if(handle != null) {
+	                    	handle.exportAsDrag(bouton, evenement_souris, TransferHandler.COPY);
+	                    }
 	                }
 	            });
 			}

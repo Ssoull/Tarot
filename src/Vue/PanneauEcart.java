@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -136,8 +137,14 @@ public class PanneauEcart extends JPanel {
 		
 		for(CarteGraphique carteGraphique : panneau_main_joueur.getCartesJoueurPourAffichage()) {
 			carteGraphique.setEnabled(true);
+			
+			carteGraphique.setTransferHandler(null); // On enleve les exportations de donnees avec le Glisser/Deposer sur les boutons.
+			
+			placementDesCartesDeEcart.setTransferHandler(null); // On ne peut plus deposer de cartes dans l'ecart.
 		}
 		
+		
+				
 		for(CarteGraphique carteGraphique : panneau_chien.getCartesDuChienPourAffichage()) {
 			carteGraphique.setEnabled(false);
 		}

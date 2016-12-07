@@ -34,7 +34,9 @@ public class PanneauMainDuJoueur extends JPanel {
 	 * Liste de toute les cartes de la main du Joueur.
 	 */
 	private ArrayList<CarteGraphique> cartesJoueurPourAffichage;
-
+	/**
+	 * Active ou désactive le MouseMotionListener des cartes graphique.
+	 */
 	
 	/**
 	 * Initialise le panneau de la main du joueur et son contenus.
