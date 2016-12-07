@@ -20,9 +20,9 @@ public class Modele extends Observable {
 	 */
 	private final int NOMBRE_CARTES_TOTAL_TAROT = 78;
 	/**
-	 * Le nombre de cartes pour la distribution.
+	 * Le nombre de cartes a donner a un joueur lors d'une distribution.
 	 */
-	private final int NOMBRE_CARTE_POUR_DISTRIBUTION = 3;
+	private final int NOMBRE_CARTES_POUR_DISTRIBUTION = 3;
 	/**
 	 * Le nombre de cartes minimum dans la main du joueur.
 	 */
@@ -152,15 +152,14 @@ public class Modele extends Observable {
 	 */
 	public void tirerCartesPourLesJoueurs(int num_joueur) throws TarotException {
 		int nbCartesInitialDansMainJoueur = mainsDesJoueurs.get(num_joueur).size();
-		for(int nbrCartesATirer = 0; nbrCartesATirer < NOMBRE_CARTE_POUR_DISTRIBUTION; ++nbrCartesATirer) {
+		for(int nbrCartesATirer = 0; nbrCartesATirer < NOMBRE_CARTES_POUR_DISTRIBUTION; ++nbrCartesATirer) {
 			mainsDesJoueurs.get(num_joueur).add(tiragePremiereCarteDuPaquetDeJeu());
 		}
 		
-		if(mainsDesJoueurs.get(num_joueur).size() != nbCartesInitialDansMainJoueur + NOMBRE_CARTE_POUR_DISTRIBUTION) {
+		if(mainsDesJoueurs.get(num_joueur).size() != nbCartesInitialDansMainJoueur + NOMBRE_CARTES_POUR_DISTRIBUTION) {
 			int nbCartesAjoutees = mainsDesJoueurs.get(num_joueur).size() - nbCartesInitialDansMainJoueur;
-			
 			throw new TarotException(" Lors du tour du joueur " + num_joueur + ", seulement " + nbCartesAjoutees
-					+ " cartes ont ete ajoutees et non " + NOMBRE_CARTE_POUR_DISTRIBUTION);
+					+ " cartes ont ete ajoutees et non " + NOMBRE_CARTES_POUR_DISTRIBUTION);
 		}
 
 		if(num_joueur == 0) {
@@ -304,10 +303,19 @@ public class Modele extends Observable {
 		return NOMBRE_JOUEURS;
 	}
 	
+	/**
+	 * @return Le nombre de cartes au total dans un jeu de Tarot -> 78
+	 */
 	public int getNombreCartesTotalTarot() {
 		return NOMBRE_CARTES_TOTAL_TAROT;
 	}
 	
+	/**
+	 * @return Le nombre de cartes a donner a un joueur lors d'une distribution -> 3
+	 */
+	public int getNombreCartesPourDistribution() {
+		return NOMBRE_CARTES_POUR_DISTRIBUTION;
+	}
 	
 	/**
 	 * Accesseur pour savoir si la mains du joueur dans la vue est trie ou non.

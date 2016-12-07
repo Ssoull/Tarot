@@ -121,7 +121,7 @@ public class PanneauMainDuJoueur extends JPanel {
 
 	
 	/**
-	 * Actualise les cartes une fois que le modèle les tries.
+	 * Actualise les cartes une fois que le modï¿½le les tries.
 	 * 
 	 * @param modele
 	 */
@@ -186,7 +186,7 @@ public class PanneauMainDuJoueur extends JPanel {
 
 	
 	/**
-	 * Methode prennant en paramètre une carte et retourne son equivalant en carte graphique si elle existe dans la main du joueur.
+	 * Methode prennant en parametre une carte et retourne son equivalant en carte graphique si elle existe dans la main du joueur.
 	 * @param carte
 	 * @return CarteGraphique
 	 */
