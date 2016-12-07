@@ -318,6 +318,13 @@ public class Modele extends Observable {
 	}
 	
 	/**
+	 * @return Le nombre de cartes maximum dans l'ecart -> 6
+	 */
+	public int getNombreCartesEcart() {
+		return NOMBRE_CARTES_ECART;
+	}
+	
+	/**
 	 * Accesseur pour savoir si la mains du joueur dans la vue est trie ou non.
 	 * @return boolean
 	 */
