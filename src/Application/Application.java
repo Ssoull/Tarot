@@ -3,7 +3,7 @@
  * 
  * Message des programmeurs : 
  * Si il n'y a pas d'accent au niveau des commentaires, c'est parce qu'en essayant de l'envoyer,
- * il mettait les accents sous forme de méta caractères. En esperant que cela ne nuise pas a la lecture.
+ * L'IDE mettait les accents sous forme de méta caractères. En esperant que cela ne nuise pas a la lecture.
  * 
  * Gutierrez Pablo :
  * "Nous avons choisi Swing car nous aimons la difficulte, avec ce projet nous avons compris que la reciproque n'est pas vrai..."
