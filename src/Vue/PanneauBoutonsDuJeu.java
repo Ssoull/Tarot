@@ -1,3 +1,7 @@
+/*
+ * Un code realise par Jules Despret et Pablo Gutierrez.
+ */
+
 package Vue;
 
 import java.awt.Cursor;
@@ -201,7 +205,7 @@ public class PanneauBoutonsDuJeu extends JPanel{
 		}
 		
 		for(CarteGraphique carteGraphique : panneau_main_joueur.getCartesJoueurPourAffichage()) {
-			//Ici le 14 repr�sente les rois, le 1 l'atout 1 et le 21 l'atout 21, ces cartes ne peuvent pas etre dans l'Ecart.
+			//Ici le 14 represente les rois, tout les atouts et l'excuse, ne peuvent pas etre dans l'Ecart.
 			if((carteGraphique.getCarte().getValeur() == 14 && carteGraphique.getCarte().getType() != TypeCarte.Atout) || 
 				carteGraphique.getCarte().getType() == TypeCarte.Atout || carteGraphique.getCarte().getType() == TypeCarte.Excuse)	{
 				carteGraphique.setEnabled(false);
@@ -209,8 +213,10 @@ public class PanneauBoutonsDuJeu extends JPanel{
 			else {
 				carteGraphique.setEnabled(true);
 				
-				carteGraphique.setTransferHandler(new ExporterDonnees(carteGraphique.getCarte().getCheminImageCarte()));
-
+				carteGraphique.setTransferHandler(new ExporterDonnees(carteGraphique.getCarte().getCheminImageCarte())); // On dit que chaque carte graphique peut exporter son cchemin de carte.
+				
+				// On dit que chaque carte graphique doit reagir a l'evenement du mouvement d'une souris avec un MouseAdapter. 
+				//Ce MouseAdapter permet de dire que l'on exporte les donnees avec le TransferHandle que l'on a initialise sur la ligne juste au dessus.
 				carteGraphique.addMouseMotionListener(new MouseAdapter() {
 	                @Override
 	                public void mouseDragged(MouseEvent evenement_souris) {
@@ -227,7 +233,7 @@ public class PanneauBoutonsDuJeu extends JPanel{
 	
 	
 	/**
-	 * Repr�sente l'action des boutons de la Garde sans et contre le Chien.
+	 * Represente l'action des boutons de la Garde sans et contre le Chien.
 	 * @param panneau_main_joueur
 	 */
 	private void actionBoutonGardeSansLeChienEtGardeContreLeChien(PanneauMainDuJoueur panneau_main_joueur) {

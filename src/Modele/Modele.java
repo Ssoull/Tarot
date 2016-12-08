@@ -1,3 +1,7 @@
+/*
+ * Un code realise par Jules Despret et Pablo Gutierrez.
+ */
+
 package Modele;
 
 import Tests.TarotException;

@@ -1,3 +1,7 @@
+/*
+ * Un code realise par Jules Despret et Pablo Gutierrez.
+ */
+
 package Vue;
 
 import Modele.Modele;
@@ -62,12 +66,14 @@ public class Vue extends JFrame implements Observer{
 	 */
 	private void initialisationFenetre() {
 		this.setLayout(new BorderLayout());
-		this.setExtendedState(Vue.MAXIMIZED_BOTH); // Permet de mettre en plein ecran
-		Dimension dimensionEcran = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-		this.setSize(dimensionEcran);
+		
+		Dimension dimensionEcran = java.awt.Toolkit.getDefaultToolkit().getScreenSize(); // Permet de récupérer la taille de l'ecran.
+		this.setSize(dimensionEcran.width, dimensionEcran.height - 50);
+		
 		this.setTitle("Tarot S3B (Jules Despret, Pablo Gutierrez)");
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setResizable(true);
+		this.setResizable(false);
 		this.setVisible(true);
 	}
 

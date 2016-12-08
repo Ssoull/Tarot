@@ -1,3 +1,7 @@
+/*
+ * Un code realise par Jules Despret et Pablo Gutierrez.
+ */
+
 package Vue;
 
 import java.awt.Component;
@@ -57,12 +61,12 @@ public class ImporterDonnees extends TransferHandler {
                 if (chemin_carte instanceof String) {
                     Component composant = donnees_supportees.getComponent();
                     if (composant instanceof JPanel) {
-                    	controleur.ajoutCarteDansEcart(chemin_carte.toString());
+                    	controleur.ajoutCarteDansEcartAPartirDuCheminDeLaCarte(chemin_carte.toString());
                     	importAvecSucces = true;
                     }
                 }
-            } catch (Exception exp) {
-                exp.printStackTrace();
+            } catch (Exception exception) {
+            	exception.printStackTrace();
             }
         }
         return importAvecSucces;

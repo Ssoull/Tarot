@@ -1,10 +1,13 @@
+/*
+ * Un code realise par Jules Despret et Pablo Gutierrez.
+ */
+
 package Tests;
 
 /**
  * Classe gerant les exceptions dans le projet Tarot.
  * Se construit a partir d'une message et affiche un avertissement sur la sortie d'erreur en cas de levee d'exception.
- * @author jdespret
- *
+ * @author Despret
  */
 public class TarotException extends Exception {
 	/**

@@ -1,3 +1,7 @@
+/*
+ * Un code realise par Jules Despret et Pablo Gutierrez.
+ */
+
 package Tests;
 
 import static org.junit.Assert.*;
@@ -8,8 +12,7 @@ import Modele.*;
 
 /**
  * Classe utilisee pour les tests unitaires de la partie Controleur du projet Tarot.
- * @author jdespret
- *
+ * @author Despret, Gutierrez
  */
 public class ControleurTest {
 	private Controleur controleur;
@@ -36,7 +39,7 @@ public class ControleurTest {
 		assertTrue(modele.getMainDuPremierJoueur().size() == 1 && modele.getPaquetEcart().isEmpty());
 		
 		try {
-			controleur.ajoutCarteDansEcart(test.getCheminImageCarte());
+			controleur.ajoutCarteDansEcartAPartirDuCheminDeLaCarte(test.getCheminImageCarte());
 		} catch (TarotException e) {
 			e.message();
 		}
@@ -52,7 +55,7 @@ public class ControleurTest {
 		reconstruire();
 		
 		for(int i=0 ; i<modele.getNombreCartesEcartMax() ; ++i)
-			modele.ajoutCarteEcart(new Carte(2, TypeCarte.Pique));
+			modele.ajoutCarteEcart(new Carte(i, TypeCarte.Pique));
 		
 		assertTrue(modele.getPaquetEcart().size() == modele.getNombreCartesEcartMax() 
 				&& modele.getPaquetDuChien().isEmpty());

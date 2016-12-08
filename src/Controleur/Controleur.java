@@ -1,3 +1,7 @@
+/*
+ * Un code realise par Jules Despret et Pablo Gutierrez.
+ */
+
 package Controleur;
 
 import Modele.Carte;
@@ -36,8 +40,16 @@ public class Controleur {
 					e.message();
 				}
 			}
+			
+			//return true;
 		}
+		//else {
+			//return false;
+		//}
 		
+		// Retourne vrai si le paquet a encore des cartes et faux sinon.
+		// Nous effectuons ce test ici plutot que dans le if au-dessus car cela oblige a l'utilisateur de re-cliquer inutilement sur le bouton distribuer.
+		// Pour le voir par vous meme, vous pouvez commenter le if..else.. juste en dessous et decommenter les ligne juste au-dessus. 
 		if(modele.getPaquetDuJeu().size() > 0) {
 			return true;
 		}
@@ -51,7 +63,7 @@ public class Controleur {
 	 * Trie la main du joueur.
 	 */
 	public void trierMainJoueur() {
-		// On ne refait pas de trie si l'affichage du precedent tri ne s'est pas fait
+		// On ne refait pas de trie si l'affichage du precedent tri ne s'est pas fait.
 		if(!modele.getNotificationMainsDuJoueurPourAffichagePourTrie()) {
 			modele.trierMainJoueur();
 		}
@@ -63,7 +75,7 @@ public class Controleur {
 	 * @param chemin_carte
 	 * @throws TarotException
 	 */
-	public void ajoutCarteDansEcart(String chemin_carte) throws TarotException {
+	public void ajoutCarteDansEcartAPartirDuCheminDeLaCarte(String chemin_carte) throws TarotException {
 		Carte carteTmp = null;
 		
 		for(Carte carte : modele.getMainDuPremierJoueur()) {

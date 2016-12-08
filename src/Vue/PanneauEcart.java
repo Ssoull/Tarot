@@ -1,11 +1,13 @@
+/*
+ * Un code realise par Jules Despret et Pablo Gutierrez.
+ */
+
 package Vue;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -54,7 +56,6 @@ public class PanneauEcart extends JPanel {
 	 * @param fenetre_affichage
 	 */
 	private void initialisationPanneauEcart(JFrame fenetre_affichage) {
-		this.setBackground(Color.MAGENTA);
 		this.setLayout(new BorderLayout());
 
 		Dimension tmpDimension = new Dimension(fenetre_affichage.getWidth()/2, fenetre_affichage.getHeight()/2);
@@ -79,7 +80,6 @@ public class PanneauEcart extends JPanel {
 	 */
 	private void initialisationPlacementCartesDeEcart() {
 		placementDesCartesDeEcart = new JPanel(new FlowLayout());
-		placementDesCartesDeEcart.setBackground(Color.CYAN);
 
 		this.add(placementDesCartesDeEcart);
 	}
@@ -128,12 +128,12 @@ public class PanneauEcart extends JPanel {
 	 */
 	private void actualisationDesPaquetEnFonctionDuPaquetEcart(Controleur controleur, Modele modele, PanneauBoutonsDuJeu panneau_bouton, PanneauDuChien panneau_chien, PanneauMainDuJoueur panneau_main_joueur) {
 		try {
-			controleur.recupererEcartDansChien();
+			controleur.recupererEcartDansChien(); // Ceci concerne les cartes contenus dans le modele.
 		} catch (TarotException e) {
 			e.message();
 		}
 		
-		panneau_chien.recupererPaquetEcartDansPaquetDuChien(modele);
+		panneau_chien.recupererPaquetEcartDansPaquetDuChien(modele); // Ceci concerne les cartes contenus dans la vue.
 		
 		for(CarteGraphique carteGraphique : panneau_main_joueur.getCartesJoueurPourAffichage()) {
 			carteGraphique.setEnabled(true);
@@ -142,9 +142,7 @@ public class PanneauEcart extends JPanel {
 			
 			placementDesCartesDeEcart.setTransferHandler(null); // On ne peut plus deposer de cartes dans l'ecart.
 		}
-		
-		
-				
+			
 		for(CarteGraphique carteGraphique : panneau_chien.getCartesDuChienPourAffichage()) {
 			carteGraphique.setEnabled(false);
 		}

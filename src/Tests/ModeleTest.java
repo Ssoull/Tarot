@@ -1,3 +1,7 @@
+/*
+ * Un code realise par Jules Despret et Pablo Gutierrez.
+ */
+
 package Tests;
 
 import static org.junit.Assert.*;
@@ -8,8 +12,7 @@ import Modele.*;
 
 /**
  * Classe utilisee pour les tests unitaires de la partie Modele du projet Tarot.
- * @author jdespret
- *
+ * @author Despret, Gutierrez
  */
 public class ModeleTest {
 	private Modele modele;
@@ -43,6 +46,7 @@ public class ModeleTest {
 		modele = new Modele();
 
 		assertTrue(modele.getMainDuPremierJoueur().isEmpty() && modele.getPaquetDuJeu().size() == modele.getNombreCartesTotalTarot());
+		
 		try {
 			modele.tirerCartesPourLesJoueurs(0);
 		} catch (TarotException e) {
@@ -71,12 +75,12 @@ public class ModeleTest {
 	
 	/**
 	 * Teste si le tri des cartes dans la main du joueur fonctionne correctement.
-	 * On teste avec 5 cartes : l'ordre attendu doit être respecté :
-	 *  1°Pique ;
-	 *  2°Coeur ;
-	 *  3°Atout ;
-	 *  4°Carreau ;
-	 *  5°Trefle ;
+	 * On teste avec 5 cartes : l'ordre attendu doit etre respecte :
+	 *  premier Pique ;
+	 *  second Coeur ;
+	 *  troisieme Atout ;
+	 *  quatrieme Carreau ;
+	 *  cinquieme Trefle ;
 	 */
 	@Test
 	public void testTriMainJoueur() {
@@ -97,11 +101,11 @@ public class ModeleTest {
 		
 		modele.trierMainJoueur();
 		
-		assertTrue(modele.getMainDuPremierJoueur().indexOf(testPique) == 0);
-		assertTrue(modele.getMainDuPremierJoueur().indexOf(testCoeur) == 1);
-		assertTrue(modele.getMainDuPremierJoueur().indexOf(testAtout) == 2);
-		assertTrue(modele.getMainDuPremierJoueur().indexOf(testCarreau) == 3);
-		assertTrue(modele.getMainDuPremierJoueur().indexOf(testTrefle) == 4);
+		assertTrue(modele.getMainDuPremierJoueur().indexOf(testPique) == 0); //Pique
+		assertTrue(modele.getMainDuPremierJoueur().indexOf(testCoeur) == 1); //Coueur
+		assertTrue(modele.getMainDuPremierJoueur().indexOf(testAtout) == 2); //Atout
+		assertTrue(modele.getMainDuPremierJoueur().indexOf(testCarreau) == 3); //Carreau
+		assertTrue(modele.getMainDuPremierJoueur().indexOf(testTrefle) == 4); //Trefle
 	}
 	
 	/**

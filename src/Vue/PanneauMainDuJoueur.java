@@ -1,3 +1,7 @@
+/*
+ * Un code realise par Jules Despret et Pablo Gutierrez.
+ */
+
 package Vue;
 
 import java.awt.BorderLayout;
@@ -58,7 +62,6 @@ public class PanneauMainDuJoueur extends JPanel {
 	 * @param fenetre_affichage
 	 */
 	private void initialisationPanneauGeneral(JFrame fenetre_affichage) {
-		this.setBackground(Color.BLUE);
 		this.setLayout(new BorderLayout());
 
 		Dimension tmpDimension = new Dimension(fenetre_affichage.getWidth() / 2, fenetre_affichage.getHeight());
@@ -83,7 +86,6 @@ public class PanneauMainDuJoueur extends JPanel {
 	 */
 	private void initialisationPlacementCartesJoueur() {
 		placementCartesJoueur = new JPanel(new FlowLayout());
-		placementCartesJoueur.setBackground(Color.YELLOW);
 
 		this.add(placementCartesJoueur);
 	}
@@ -109,7 +111,7 @@ public class PanneauMainDuJoueur extends JPanel {
 						carteJoueurPourAffichageCourant.retourner();
 						carteJoueurPourAffichageCourant.setEnabled(false);
 					}
-
+						
 					if(panneauTemporaire.toutesLesCartesSontRetournees()) {
 						panneau_boutons.actionBoutonRetournerEtTrierCarteDuJoueur(controleur);
 					}

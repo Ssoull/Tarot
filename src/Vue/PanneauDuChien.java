@@ -1,7 +1,10 @@
+/*
+ * Un code realise par Jules Despret et Pablo Gutierrez.
+ */
+
 package Vue;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -53,7 +56,6 @@ public class PanneauDuChien extends JPanel {
 	 * @param fenetre_affichage
 	 */
 	private void initialisationPanneauDuChien(JFrame fenetre_affichage) {
-		this.setBackground(Color.RED);
 		this.setLayout(new BorderLayout());
 
 		Dimension tmpDimension = new Dimension(fenetre_affichage.getWidth()/2, fenetre_affichage.getHeight()/2);
@@ -78,7 +80,6 @@ public class PanneauDuChien extends JPanel {
 	 */
 	private void initialisationPlacementCartesDuChien() {
 		placementCartesDuChien = new JPanel(new FlowLayout());
-		placementCartesDuChien.setBackground(Color.GREEN);
 
 		this.add(placementCartesDuChien);
 	}
