@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import Controleur.Controleur;
 import Modele.Carte;
 import Modele.Modele;
+import Tests.TarotException;
 
 /**
  * Panneau contenant tous les elements graphique pour afficher le chien.
@@ -33,7 +34,7 @@ public class PanneauDuChien extends JPanel {
 	 */
 	private ArrayList<CarteGraphique> cartesDuChienPourAffichage;
 
-	
+
 	/**
 	 * Initialise le panneau du Chien et tout son contenus.
 	 * @param fenetre_affichage
@@ -46,7 +47,7 @@ public class PanneauDuChien extends JPanel {
 		cartesDuChienPourAffichage = new ArrayList<CarteGraphique>(6);
 	}
 
-	
+
 	/**
 	 * Initialise le panneau general du chien afin de pouvoir accepeter les elements qui le composent.
 	 * @param fenetre_affichage
@@ -60,7 +61,7 @@ public class PanneauDuChien extends JPanel {
 		this.setMaximumSize(tmpDimension);
 	}
 
-	
+
 	/**
 	 * Initialise le texte pour identifier l'endroit du chien.
 	 */
@@ -71,7 +72,7 @@ public class PanneauDuChien extends JPanel {
 		this.add(texteDuChien, BorderLayout.NORTH);
 	}
 
-	
+
 	/**
 	 * Initialise le panneau mettant correctement les cartes du chien.
 	 */
@@ -82,7 +83,7 @@ public class PanneauDuChien extends JPanel {
 		this.add(placementCartesDuChien);
 	}
 
-	
+
 	/**
 	 * Actualise l'affichage du Chien.
 	 */
@@ -93,7 +94,7 @@ public class PanneauDuChien extends JPanel {
 		placementCartesDuChien.add(cartesDuChienPourAffichage.get(cartesDuChienPourAffichage.size() - 1), BorderLayout.CENTER);
 	}
 
-	
+
 	/**
 	 * Methode permettant de vider le chien dans le paquet du joueur.
 	 * @param modele
@@ -102,15 +103,19 @@ public class PanneauDuChien extends JPanel {
 		for(CarteGraphique carteGraphique : cartesDuChienPourAffichage) {
 			modele.ajoutCarteDansMainJoueur(carteGraphique.getCarte());
 		}
-		
+
 		cartesDuChienPourAffichage.clear();
 		placementCartesDuChien.removeAll();
-		
-		controleur.viderPaquetDuChien(); //On vide le chien (au niveau stockage 
+
+		try {
+			controleur.viderPaquetDuChien(); //On vide le chien (au niveau stockage 
+		} catch(TarotException e) {
+			e.message();
+		}
 		controleur.trierMainJoueur(); //On trie la main du joueur (dans le modele) et re-affiche la bonne main du joueur grace au modele Observer/Observable.
 	}
-	
-	
+
+
 	/**
 	 * Methode permettant de recuperer le contenu de l'ecart dans le Chien.
 	 * @param modele
@@ -119,12 +124,12 @@ public class PanneauDuChien extends JPanel {
 		for(Carte carte : modele.getPaquetDuChien()) {
 			cartesDuChienPourAffichage.add(new CarteGraphique(carte));
 			cartesDuChienPourAffichage.get(cartesDuChienPourAffichage.size() - 1).retourner();
-			
+
 			placementCartesDuChien.add(cartesDuChienPourAffichage.get(cartesDuChienPourAffichage.size() - 1));
 		}
 	}
-	
-	
+
+
 	/**
 	 * Accesseur au paquet du chien.
 	 * @return ArrayList<CarteGraphique>

@@ -100,7 +100,7 @@ public class Modele extends Observable {
 		}
 
 		if(mainsDesJoueurs.size() != NOMBRE_JOUEURS) {
-			throw new TarotException("Il y a " + mainsDesJoueurs.size() + " mains au lieu de " + NOMBRE_JOUEURS);
+			throw new TarotException(this, "Il y a " + mainsDesJoueurs.size() + " mains au lieu de " + NOMBRE_JOUEURS);
 		}
 	}
 
@@ -122,7 +122,7 @@ public class Modele extends Observable {
 		paquetDuJeu.add(new Carte(22, TypeCarte.Excuse));
 		
 		if(paquetDuJeu.size() != NOMBRE_CARTES_TOTAL_TAROT)
-			throw new TarotException("A l'initialisation, le paquet de cartes contient " + paquetDuJeu.size() + " cartes et non " + NOMBRE_CARTES_TOTAL_TAROT);
+			throw new TarotException(this, "A l'initialisation, le paquet de cartes contient " + paquetDuJeu.size() + " cartes et non " + NOMBRE_CARTES_TOTAL_TAROT);
 
 		Collections.shuffle(paquetDuJeu);
 	}
@@ -143,7 +143,7 @@ public class Modele extends Observable {
 		}
 
 		if(paquetDuJeu.size() != tailleInitiale + nbCartesAjoutees)
-			throw new TarotException(" Il y a " + nbCartesAjoutees + " cartes [" + typeCarte.toString() + "] ajoutees et non " + nbrCartes);
+			throw new TarotException(this, "Il y a " + nbCartesAjoutees + " cartes [" + typeCarte.toString() + "] ajoutees et non " + nbrCartes);
 	}
 
 	
@@ -158,7 +158,7 @@ public class Modele extends Observable {
 		
 		if(mainsDesJoueurs.get(num_joueur).size() != nbCartesInitialDansMainJoueur + NOMBRE_CARTES_POUR_DISTRIBUTION) {
 			int nbCartesAjoutees = mainsDesJoueurs.get(num_joueur).size() - nbCartesInitialDansMainJoueur;
-			throw new TarotException(" Lors du tour du joueur " + num_joueur + ", seulement " + nbCartesAjoutees
+			throw new TarotException(this, "Lors du tour du joueur " + num_joueur + ", seulement " + nbCartesAjoutees
 					+ " cartes ont ete ajoutees et non " + NOMBRE_CARTES_POUR_DISTRIBUTION);
 		}
 
@@ -226,7 +226,7 @@ public class Modele extends Observable {
 	 */
 	public boolean ecartPlein() throws TarotException {
 		if(paquetEcart.size() > 6)
-			throw new TarotException("L'ecart contient trop de cartes [" + paquetEcart.size() + "]");
+			throw new TarotException(this, "L'ecart contient trop de cartes [" + paquetEcart.size() + "]");
 		return paquetEcart.size() == 6;
 	}
 	
@@ -318,10 +318,17 @@ public class Modele extends Observable {
 	}
 	
 	/**
-	 * @return Le nombre de cartes maximum dans l'ecart -> 6
+	 * @return Le nombre de cartes maximum dans l'ecart -> 6.
 	 */
-	public int getNombreCartesEcart() {
+	public int getNombreCartesEcartMax() {
 		return NOMBRE_CARTES_ECART;
+	}
+	
+	/**
+	 * @return Le nombre de cartes maximum dans le chien -> 6.
+	 */
+	public int getNombreCartesChienMax() {
+		return NOMBRE_CARTES_CHIEN;
 	}
 	
 	/**

@@ -12,8 +12,8 @@ public class TarotException extends Exception {
 	 */
 	private String message;
 	
-	public TarotException(String message) {
-		this.message = "ERREUR -> " + message;
+	public TarotException(Object o, String message) {
+		this.message = o.getClass().toString() + " :\nERREUR -> " + message;
 	}
 	
 	/**

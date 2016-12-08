@@ -66,7 +66,7 @@ public class Carte {
 		cheminImageCarte += ".jpg";
 		
 		if(cheminImageCarte == "img/.jpg")
-			throw new TarotException("La carte [" + valeurCarte + " : " + typeCarte + "] a un chemin mal initialise");
+			throw new TarotException(this, "La carte [" + valeurCarte + " : " + typeCarte + "] a un chemin mal initialise");
 	}
 	
 	
@@ -104,13 +104,13 @@ public class Carte {
 			case Atout:
 				valeur += 200;
 				break;
-			case Excuse:
+			case Carreau:
 				valeur += 300;
 				break;
-			case Carreau:
+			case Trefle:
 				valeur += 400;
 				break;
-			case Trefle:
+			case Excuse:
 				valeur += 500;
 				break;
 			}

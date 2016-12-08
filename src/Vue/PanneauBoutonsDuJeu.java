@@ -16,7 +16,7 @@ import Modele.Modele;
 
 
 /**
- * Classe permettant de créer et paramétrer les boutons du jeu.
+ * Classe permettant de creer et parametrer les boutons du jeu.
  * @author Despret
  */
 public class PanneauBoutonsDuJeu extends JPanel{
@@ -201,7 +201,7 @@ public class PanneauBoutonsDuJeu extends JPanel{
 		}
 		
 		for(CarteGraphique carteGraphique : panneau_main_joueur.getCartesJoueurPourAffichage()) {
-			//Ici le 14 représente les rois, le 1 l'atout 1 et le 21 l'atout 21, ces cartes ne peuvent pas etre dans l'Ecart.
+			//Ici le 14 reprï¿½sente les rois, le 1 l'atout 1 et le 21 l'atout 21, ces cartes ne peuvent pas etre dans l'Ecart.
 			if((carteGraphique.getCarte().getValeur() == 14 && carteGraphique.getCarte().getType() != TypeCarte.Atout) || 
 				carteGraphique.getCarte().getType() == TypeCarte.Atout || carteGraphique.getCarte().getType() == TypeCarte.Excuse)	{
 				carteGraphique.setEnabled(false);
@@ -227,7 +227,7 @@ public class PanneauBoutonsDuJeu extends JPanel{
 	
 	
 	/**
-	 * Représente l'action des boutons de la Garde sans et contre le Chien.
+	 * Reprï¿½sente l'action des boutons de la Garde sans et contre le Chien.
 	 * @param panneau_main_joueur
 	 */
 	private void actionBoutonGardeSansLeChienEtGardeContreLeChien(PanneauMainDuJoueur panneau_main_joueur) {

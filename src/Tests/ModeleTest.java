@@ -1,12 +1,17 @@
 package Tests;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 import Modele.*;
 
-public class TestsModele {
+/**
+ * Classe utilisee pour les tests unitaires de la partie Modele du projet Tarot.
+ * @author jdespret
+ *
+ */
+public class ModeleTest {
 	private Modele modele;
 
 	/**
@@ -24,7 +29,7 @@ public class TestsModele {
 	@Test
 	public void testAjoutCarteDansMainJoueur() {
 		modele = new Modele(); 
-		assertTrue(modele.getMainDuPremierJoueur().size() == 0);
+		assertTrue(modele.getMainDuPremierJoueur().isEmpty());
 		modele.ajoutCarteDansMainJoueur(new Carte(10, TypeCarte.Coeur));
 		assertTrue(modele.getMainDuPremierJoueur().size() == 1);
 	}
@@ -37,11 +42,10 @@ public class TestsModele {
 	public void testTirerCartePourJoueur1() {
 		modele = new Modele();
 
-		assertTrue(modele.getMainDuPremierJoueur().size() == 0 && modele.getPaquetDuJeu().size() == modele.getNombreCartesTotalTarot());
+		assertTrue(modele.getMainDuPremierJoueur().isEmpty() && modele.getPaquetDuJeu().size() == modele.getNombreCartesTotalTarot());
 		try {
 			modele.tirerCartesPourLesJoueurs(0);
 		} catch (TarotException e) {
-			System.err.print("TEST_");
 			e.message();
 		}
 		assertTrue(modele.getMainDuPremierJoueur().size() == modele.getNombreCartesPourDistribution() 
@@ -60,7 +64,6 @@ public class TestsModele {
 		try {
 			modele.tirerCartesPourLesJoueurs(1);
 		} catch (TarotException e) {
-			System.err.print("TEST_");
 			e.message();
 		}
 		assertTrue(modele.getPaquetDuJeu().size() == modele.getNombreCartesTotalTarot() - modele.getNombreCartesPourDistribution());
@@ -112,13 +115,13 @@ public class TestsModele {
 		Carte test = new Carte(4, TypeCarte.Pique);
 		modele.ajoutCarteDansMainJoueur(test);
 		
-		assertTrue(modele.getPaquetEcart().size() == 0);
+		assertTrue(modele.getPaquetEcart().isEmpty());
 		assertTrue(modele.getMainDuPremierJoueur().size() == 1);
 		
 		modele.ajoutCarteEcart(test);
 		
 		assertTrue(modele.getPaquetEcart().size() == 1);
-		assertTrue(modele.getMainDuPremierJoueur().size() == 0);
+		assertTrue(modele.getMainDuPremierJoueur().isEmpty());
 	}
 	
 	/**
@@ -129,19 +132,17 @@ public class TestsModele {
 		modele = new Modele();
 		
 		try {
-			assertTrue(!modele.ecartPlein());
+			assertFalse(modele.ecartPlein());
 		} catch (TarotException e) {
-			System.out.print("TEST_");
 			e.message();
 		}
 		
-		for(int i=0 ; i<modele.getNombreCartesEcart() ; i++)
+		for(int i=0 ; i<modele.getNombreCartesEcartMax() ; i++)
 			modele.ajoutCarteEcart(new Carte(0, TypeCarte.Atout));
 		
 		try {
 			assertTrue(modele.ecartPlein());
 		} catch (TarotException e) {
-			System.out.print("TEST_");
 			e.message();
 		}
 	}

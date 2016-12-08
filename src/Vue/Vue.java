@@ -24,8 +24,6 @@ public class Vue extends JFrame implements Observer{
 	 * Represente le controleur de l'architecture MVC.
 	 */
 	private Controleur controleur;
-
-
 	/**
 	 * Panneau contenant les boutons du jeu.
 	 */
@@ -36,7 +34,7 @@ public class Vue extends JFrame implements Observer{
 	 */
 	private PanneauMainDuJoueur panneauMainDuJoueur;
 	/**
-	 * Panneau Contenant l'écart et le chien
+	 * Panneau Contenant l'ecart et le chien
 	 */
 	private PanneauDuChienEtEcart panneauDuChienEtEcart;
 
