@@ -11,12 +11,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.TransferHandler;
 
 import Controleur.Controleur;
-import Modele.TypeCarte;
 import Modele.Modele;
+import Modele.TypeCarte;
+import Tests.TarotException;
 
 
 /**
@@ -48,14 +50,17 @@ public class PanneauBoutonsDuJeu extends JPanel{
 	 * Bouton permettant au joueur d'effectuer une Garde contre le Chien.
 	 */
 	private JButton boutonPourLaGardeContreLeChien;
-
+	/**
+	 * Bouton permettant de quitter le jeu.
+	 */
+	private JButton boutonQuitterJeu;
 	
 	/**
 	 * Initialise le panneau et ces elements le composant.
 	 * @param controleur
 	 * @param panneau_main_joueur
 	 */
-	public PanneauBoutonsDuJeu(Modele modele, Controleur controleur, PanneauMainDuJoueur panneau_main_joueur, PanneauDuChien panneau_chien) {
+	public PanneauBoutonsDuJeu(JFrame fenetre_affichage, Modele modele, Controleur controleur, PanneauMainDuJoueur panneau_main_joueur, PanneauDuChien panneau_chien) {
 		initialisationBoutonDistribuer(controleur, panneau_main_joueur);
 		initialisationBoutonRetournerToutesLesCartesDuJoueurEtTrier(controleur, panneau_main_joueur);
 		
@@ -66,9 +71,12 @@ public class PanneauBoutonsDuJeu extends JPanel{
 		
 		boutonPourLaGardeSansLeChien = new JButton("Garde sans le chien");
 		boutonPourLaGardeContreLeChien = new JButton("Garde contre le chien");
-		initialisationBoutonPourLaGardeSansLeChienEtPourLaGardeContreLeChien(boutonPourLaGardeSansLeChien, panneau_main_joueur);
-		initialisationBoutonPourLaGardeSansLeChienEtPourLaGardeContreLeChien(boutonPourLaGardeContreLeChien, panneau_main_joueur);
+		initialisationBoutonPourLaGardeSansLeChienEtPourLaGardeContreLeChien(controleur, boutonPourLaGardeSansLeChien, panneau_main_joueur);
+		initialisationBoutonPourLaGardeSansLeChienEtPourLaGardeContreLeChien(controleur, boutonPourLaGardeContreLeChien, panneau_main_joueur);
+		
+		initialisationBoutonQuitterJeu(fenetre_affichage);
 	}
+
 
 
 	/**
@@ -152,7 +160,7 @@ public class PanneauBoutonsDuJeu extends JPanel{
 	 * @param bouton
 	 * @param panneau_main_joueur
 	 */
-	private void initialisationBoutonPourLaGardeSansLeChienEtPourLaGardeContreLeChien(JButton bouton, PanneauMainDuJoueur panneau_main_joueur) {
+	private void initialisationBoutonPourLaGardeSansLeChienEtPourLaGardeContreLeChien(Controleur controleur, JButton bouton, PanneauMainDuJoueur panneau_main_joueur) {
 		bouton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		bouton.setVisible(true);
 		bouton.setEnabled(false);
@@ -163,10 +171,41 @@ public class PanneauBoutonsDuJeu extends JPanel{
 				if(evt.getSource() == bouton) {
 					actionBoutonGardeSansLeChienEtGardeContreLeChien(panneau_main_joueur);
 				}
+				
+				
+				if(bouton.equals(boutonPourLaGardeContreLeChien)) {
+					try {
+						controleur.viderPaquetDuChien();
+					} catch (TarotException e) {
+						e.message();
+					}
+				}
 			}
 		});
 		
 		this.add(bouton);
+	}
+	
+	
+
+	/**
+	 * Initialise le bouton qui permet de quitter le jeu lorsque toutes les actions faisable sont fini.
+	 * @param fenetre_affichage
+	 */
+	private void initialisationBoutonQuitterJeu(JFrame fenetre_affichage) {
+		boutonQuitterJeu = new JButton("Quitter");
+		boutonQuitterJeu.setEnabled(false);
+		
+		boutonQuitterJeu.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				if(event.getSource() == boutonQuitterJeu) {
+					fenetre_affichage.dispose();
+				}
+			}
+		});
+		
+		this.add(boutonQuitterJeu);
 	}
 	
 	
@@ -242,6 +281,8 @@ public class PanneauBoutonsDuJeu extends JPanel{
 		boutonPourLaGardeSansLeChien.setEnabled(false);
 		boutonPourLaGardeContreLeChien.setEnabled(false);
 		
+		boutonQuitterJeu.setEnabled(true);
+		
 		for(CarteGraphique carteGraphique : panneau_main_joueur.getCartesJoueurPourAffichage()) {
 			carteGraphique.setEnabled(true);
 		}
@@ -294,5 +335,13 @@ public class PanneauBoutonsDuJeu extends JPanel{
 	 */
 	public JButton getBoutonPourLaGardeContreLeChien() {
 		return boutonPourLaGardeContreLeChien;
+	}
+	
+	/**
+	 * Accesseur du bouton quittant le jeu.
+	 * @return JButton
+	 */
+	public JButton getBoutonQuitterJeu() {
+		return boutonQuitterJeu;
 	}
 }

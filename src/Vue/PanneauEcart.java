@@ -146,5 +146,7 @@ public class PanneauEcart extends JPanel {
 		for(CarteGraphique carteGraphique : panneau_chien.getCartesDuChienPourAffichage()) {
 			carteGraphique.setEnabled(false);
 		}
+		
+		panneau_bouton.getBoutonQuitterJeu().setEnabled(true);
 	}
 }

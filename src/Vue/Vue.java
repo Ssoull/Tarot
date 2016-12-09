@@ -111,7 +111,7 @@ public class Vue extends JFrame implements Observer{
 	 * Initialise le panneau contenant les boutons du jeu
 	 */
 	private void initialisationElementsPanneauBoutons() {
-		panneauBoutonsJeu = new PanneauBoutonsDuJeu(modele, controleur, panneauMainDuJoueur, panneauDuChienEtEcart.getPanneauDuChien());
+		panneauBoutonsJeu = new PanneauBoutonsDuJeu(this, modele, controleur, panneauMainDuJoueur, panneauDuChienEtEcart.getPanneauDuChien());
 		
 		this.getContentPane().add(panneauBoutonsJeu, BorderLayout.NORTH); 
 	}
@@ -122,15 +122,29 @@ public class Vue extends JFrame implements Observer{
 	 */
 	@Override
 	public void update(Observable obs, Object obj) {
-		if(panneauBoutonsJeu.getBoutonDistribuer().isEnabled()) {
+		if(controleur.getNotificationActualisationMainsDuJoueurLorsDeLaDistribution()) {
 			panneauMainDuJoueur.actualisationCartesDuJoueurPourAffichageLorsDeLaDistribution(controleur, modele, panneauBoutonsJeu, panneauDuChienEtEcart.getPanneauEcart());
 			panneauDuChienEtEcart.getPanneauDuChien().actualisationCartesDuChienPourAffichageLorsDeLaDistribution(modele);
+			
+			controleur.actualisationMainsDuJoueurEtDuChienLorsDeLaDistributionFinie();
 		}
-		else if(modele.getNotificationMainsDuJoueurPourAffichagePourTrie()) {
+		
+		if(controleur.getNotificationActualisationMainsDuJoueurPourAffichagePourTrie()) {
 			panneauMainDuJoueur.actualisationCartesDuJoueurPouraffichageLorsDuTrie(modele, panneauBoutonsJeu);
+			
+			controleur.actualisationMainsDuJoueurPourAffichagePourTrieFinie();
 		}
-		else if(!panneauBoutonsJeu.getBoutonRetournerToutesLesCartesDuJoueur().isEnabled() && !panneauBoutonsJeu.getBoutonPourLaPrise().isEnabled()) {
+		
+		if(controleur.getNotificationActualisationEcart()) {
 			panneauDuChienEtEcart.getPanneauEcart().actualisationPaquetEcart(controleur, modele, panneauBoutonsJeu, panneauDuChienEtEcart.getPanneauDuChien(), panneauMainDuJoueur);
+			
+			controleur.actualisationEcartFinie();
+		}
+		
+		if(controleur.getNotificationActualisationSuppressionDuChien()) {
+			panneauDuChienEtEcart.getPanneauDuChien().suppressionDuChien();
+			
+			controleur.actualisationSuppressionDuChienFinie();
 		}
 		
 		this.validate(); // Re-actualise les composants de la fenetre (JPanel)

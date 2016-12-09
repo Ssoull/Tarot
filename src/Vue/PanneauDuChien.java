@@ -105,14 +105,14 @@ public class PanneauDuChien extends JPanel {
 			modele.ajoutCarteDansMainJoueur(carteGraphique.getCarte());
 		}
 
-		cartesDuChienPourAffichage.clear();
-		placementCartesDuChien.removeAll();
+		suppressionDuChien();
 
 		try {
 			controleur.viderPaquetDuChien(); //On vide le chien (au niveau stockage 
 		} catch(TarotException e) {
 			e.message();
 		}
+		
 		controleur.trierMainJoueur(); //On trie la main du joueur (dans le modele) et re-affiche la bonne main du joueur grace au modele Observer/Observable.
 	}
 
@@ -137,5 +137,14 @@ public class PanneauDuChien extends JPanel {
 	 */
 	public ArrayList<CarteGraphique> getCartesDuChienPourAffichage() {
 		return cartesDuChienPourAffichage;
+	}
+
+	
+	/**
+	 * Supprime le contenu du chien.
+	 */
+	public void suppressionDuChien() {
+		cartesDuChienPourAffichage.clear();
+		placementCartesDuChien.removeAll();
 	}
 }

@@ -39,10 +39,6 @@ public class Modele extends Observable {
 	 * Le nombre maximum de cartes dans l'ecart.
 	 */
 	private final int NOMBRE_CARTES_ECART = 6;
-	/**
-	 * Indique si la mains du joueur est triee.
-	 */
-	private boolean notificationMainsDuJoueurPourAffichagePourTrie;
 	
 	
 	/**
@@ -79,7 +75,7 @@ public class Modele extends Observable {
 			e.message();
 		}
 		
-		notificationMainsDuJoueurPourAffichagePourTrie = false;
+		
 	}
 
 	
@@ -194,8 +190,6 @@ public class Modele extends Observable {
 	public void trierMainJoueur() {
 		Collections.sort(mainsDesJoueurs.get(0), Carte.comparateurCartes);
 		
-		notificationMainsDuJoueurPourAffichagePourTrie = true;
-		
 		this.setChanged();
 		this.notifyObservers();
 	}
@@ -226,7 +220,7 @@ public class Modele extends Observable {
 	
 	/**
 	 * Verifie si l'ecart est plein.
-	 * @return
+	 * @return boolean
 	 */
 	public boolean ecartPlein() throws TarotException {
 		if(paquetEcart.size() > 6)
@@ -240,6 +234,9 @@ public class Modele extends Observable {
 	 */
 	public void viderChien() {
 		paquetDuChien.clear();
+		
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	
@@ -333,23 +330,6 @@ public class Modele extends Observable {
 	 */
 	public int getNombreCartesChienMax() {
 		return NOMBRE_CARTES_CHIEN;
-	}
-	
-	/**
-	 * Accesseur pour savoir si la mains du joueur dans la vue est trie ou non.
-	 * @return boolean
-	 */
-	public boolean getNotificationMainsDuJoueurPourAffichagePourTrie() {
-		return notificationMainsDuJoueurPourAffichagePourTrie;
-	}
-
-	
-	/**
-	 * Mutateur utilise pour dire que le mains du joueur de la vue est trie.
-	 * @param trie
-	 */
-	public void setNotifiactionMainsDuJoueurPourAffichagePourTrie(boolean trie) {
-		notificationMainsDuJoueurPourAffichagePourTrie = trie;
 	}
 }
 

@@ -166,8 +166,6 @@ public class PanneauMainDuJoueur extends JPanel {
 			panneau_bouton.getBoutonPourLaGardeSansLeChien().setEnabled(false);
 			panneau_bouton.getBoutonPourLaGardeContreLeChien().setEnabled(false);
 		}
-
-		modele.setNotifiactionMainsDuJoueurPourAffichagePourTrie(false);
 	}
 
 	
